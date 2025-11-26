@@ -1,0 +1,5 @@
+{
+  "name": "HotelEase HMS",
+  "description": "A comprehensive Hotel Management System featuring an Admin Dashboard for operations and a Guest Portal for reservations. Built with React, TypeScript, and Tailwind CSS (Simulating a Laravel-style application structure).",
+  "requestFramePermissions": []
+}
