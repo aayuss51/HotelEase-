@@ -8,7 +8,7 @@ import { Facility, RoomType } from '../types';
 export const ConciergeChat: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{role: 'user' | 'ai', text: string}[]>([
-    { role: 'ai', text: 'Hello! I am your AI concierge. How can I help you today?' }
+    { role: 'ai', text: 'Hello! I am HotelEase Support. How can I help you today?' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +63,7 @@ export const ConciergeChat: React.FC = () => {
           <div className="p-1.5 bg-white/20 rounded-lg backdrop-blur-sm">
             <Bot size={20} />
           </div>
-          <h3 className="font-semibold tracking-wide">Concierge AI</h3>
+          <h3 className="font-semibold tracking-wide">HotelEase Support</h3>
         </div>
         <button onClick={() => setIsOpen(false)} className="hover:bg-white/10 p-1 rounded-lg transition-colors">
           <X size={20} />

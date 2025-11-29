@@ -4,7 +4,7 @@ import { getRoom, createBooking, getFacilities } from '../../services/mockDb';
 import { RoomType, Facility, Booking } from '../../types';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/Button';
-import { Calendar, Users, ArrowLeft, CheckCircle, Loader2, FileText, Printer, Clock } from 'lucide-react';
+import { Calendar, Users, ArrowLeft, CheckCircle, Loader2, FileText, Printer, Clock, Share2 } from 'lucide-react';
 
 export const BookingSummary: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -33,6 +33,28 @@ export const BookingSummary: React.FC = () => {
     fetchData();
   }, [roomId]);
 
+  const handleShare = async () => {
+    if (!confirmedBooking || !room) return;
+
+    const shareData = {
+      title: 'Booking Confirmation - HotelEase',
+      text: `My stay at HotelEase is confirmed!\n\nBooking Reference: #${confirmedBooking.id}\nRoom: ${room.name}\nDates: ${confirmedBooking.checkIn} to ${confirmedBooking.checkOut}\nTotal: NPR ${confirmedBooking.totalPrice.toLocaleString()}`,
+      url: window.location.href
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        // Fallback to clipboard
+        await navigator.clipboard.writeText(shareData.text);
+        alert('Booking details copied to clipboard!');
+      }
+    } catch (err) {
+      console.error('Error sharing:', err);
+    }
+  };
+
   if (isLoading) {
     return <div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin text-blue-600" size={32} /></div>;
   }
@@ -56,27 +78,36 @@ export const BookingSummary: React.FC = () => {
            </div>
            
            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-             {isPending ? 'Reservation Received!' : 'Booking Confirmed!'}
+             Booking Successful!
            </h1>
            <p className="text-gray-500 mb-8 print:hidden">
              {isPending 
-               ? 'Your reservation request has been received. You will be notified once it is approved.' 
+               ? 'Your reservation request has been successfully submitted.' 
                : 'Thank you for choosing HotelEase. Your reservation is secured.'}
            </p>
+
+           {/* Highlighted Confirmation Number */}
+           <div className="bg-blue-50 border border-blue-100 rounded-xl p-6 mb-8 text-center shadow-sm relative overflow-hidden group">
+             <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+             <p className="text-xs text-blue-600 font-bold uppercase tracking-wider mb-2">Confirmation Number</p>
+             <p className="text-4xl font-mono font-bold text-blue-900 tracking-widest select-all relative z-10">#{confirmedBooking.id}</p>
+             <div className="absolute -right-4 -bottom-4 text-blue-100 opacity-20">
+               <FileText size={80} />
+             </div>
+           </div>
            
            <div className="bg-slate-50 rounded-2xl p-6 mb-8 text-left border border-slate-200 shadow-inner print:bg-white print:border-2 print:border-black">
              <div className="flex justify-between items-center border-b border-slate-200 pb-4 mb-4">
                <div>
-                 <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Confirmation ID</p>
-                 <p className="text-xl font-mono font-bold text-blue-600 tracking-wide print:text-black">#{confirmedBooking.id}</p>
+                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border print:bg-transparent print:text-black print:border-black ${
+                    isPending ? 'bg-amber-100 text-amber-800 border-amber-200' : 'bg-green-100 text-green-800 border-green-200'
+                  }`}>
+                    Status: {confirmedBooking.status}
+                  </span>
                </div>
                <div className="text-right">
-                  <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Status</p>
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium print:bg-transparent print:text-black print:border print:border-black ${
-                    isPending ? 'bg-amber-100 text-amber-800' : 'bg-green-100 text-green-800'
-                  }`}>
-                    {confirmedBooking.status}
-                  </span>
+                  <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Date</p>
+                  <p className="text-xs font-medium text-gray-900">{new Date().toLocaleDateString()}</p>
                </div>
              </div>
              
@@ -94,7 +125,7 @@ export const BookingSummary: React.FC = () => {
                    <p className="font-medium text-gray-900">{confirmedBooking.checkOut}</p>
                 </div>
                 <div>
-                   <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider mb-1">Guest Name</p>
+                   <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider mb-1">Guest</p>
                    <p className="font-medium text-gray-900">{confirmedBooking.guestName}</p>
                 </div>
                 <div>
@@ -113,8 +144,11 @@ export const BookingSummary: React.FC = () => {
            </div>
 
            <div className="flex flex-col sm:flex-row gap-3 print:hidden">
-             <Button onClick={() => window.print()} variant="outline" className="flex-1 py-3 rounded-xl gap-2 border-gray-300">
-               <Printer size={18} /> Print Receipt
+             <Button onClick={handleShare} variant="outline" className="flex-1 py-3 rounded-xl gap-2 border-gray-300 hover:bg-gray-50">
+               <Share2 size={18} /> Share
+             </Button>
+             <Button onClick={() => window.print()} variant="outline" className="flex-1 py-3 rounded-xl gap-2 border-gray-300 hover:bg-gray-50">
+               <Printer size={18} /> Print
              </Button>
              <Button onClick={() => navigate('/my-bookings')} className="flex-1 py-3 rounded-xl gap-2 shadow-lg shadow-blue-600/20">
                <FileText size={18} /> My Bookings
