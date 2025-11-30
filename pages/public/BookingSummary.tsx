@@ -4,7 +4,7 @@ import { getRoom, createBooking, getFacilities } from '../../services/mockDb';
 import { RoomType, Facility, Booking } from '../../types';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/Button';
-import { Calendar, Users, ArrowLeft, CheckCircle, Loader2, FileText, Printer, Clock, Share2 } from 'lucide-react';
+import { Calendar, Users, ArrowLeft, CheckCircle, Loader2, FileText, Printer, Clock, Share2, Copy, Check } from 'lucide-react';
 
 export const BookingSummary: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -20,6 +20,7 @@ export const BookingSummary: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [confirmedBooking, setConfirmedBooking] = useState<Booking | null>(null);
+  const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,6 +56,18 @@ export const BookingSummary: React.FC = () => {
     }
   };
 
+  const handleCopyId = async () => {
+    if (confirmedBooking) {
+      try {
+        await navigator.clipboard.writeText(confirmedBooking.id);
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000);
+      } catch (err) {
+        console.error('Failed to copy', err);
+      }
+    }
+  };
+
   if (isLoading) {
     return <div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin text-blue-600" size={32} /></div>;
   }
@@ -83,15 +96,24 @@ export const BookingSummary: React.FC = () => {
            <p className="text-gray-500 mb-8 print:hidden">
              {isPending 
                ? 'Your reservation request has been successfully submitted.' 
-               : 'Thank you for choosing HotelEase. Your reservation is secured.'}
+               : 'Thank you for choosing Mero-Booking. Your reservation is secured.'}
            </p>
 
            {/* Highlighted Confirmation Number */}
            <div className="bg-blue-50 border border-blue-100 rounded-xl p-6 mb-8 text-center shadow-sm relative overflow-hidden group">
              <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
              <p className="text-xs text-blue-600 font-bold uppercase tracking-wider mb-2">Confirmation Number</p>
-             <p className="text-4xl font-mono font-bold text-blue-900 tracking-widest select-all relative z-10">#{confirmedBooking.id}</p>
-             <div className="absolute -right-4 -bottom-4 text-blue-100 opacity-20">
+             <div className="flex items-center justify-center gap-3 relative z-10">
+               <p className="text-4xl font-mono font-bold text-blue-900 tracking-widest select-all">#{confirmedBooking.id}</p>
+               <button 
+                 onClick={handleCopyId} 
+                 className="p-2 bg-white/50 hover:bg-white text-blue-500 hover:text-green-600 rounded-lg transition-all shadow-sm border border-transparent hover:border-blue-100"
+                 title="Copy Confirmation Number"
+               >
+                 {isCopied ? <Check size={20} className="text-green-500" /> : <Copy size={20} />}
+               </button>
+             </div>
+             <div className="absolute -right-4 -bottom-4 text-blue-100 opacity-20 pointer-events-none">
                <FileText size={80} />
              </div>
            </div>
@@ -156,8 +178,8 @@ export const BookingSummary: React.FC = () => {
            </div>
            
            <div className="hidden print:block text-center text-xs mt-8 text-gray-500">
-              <p>HotelEase Management System • Kathmandu, Nepal</p>
-              <p>www.hotelease.com • contact@hotelease.com</p>
+              <p>Mero-Booking Management System • Kathmandu, Nepal</p>
+              <p>www.merobooking.com • contact@merobooking.com</p>
            </div>
         </div>
       </div>

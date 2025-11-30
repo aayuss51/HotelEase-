@@ -40,7 +40,7 @@ export const Home: React.FC = () => {
 
     const timer = setInterval(() => {
       setCurrentHeroIndex((prev) => (prev + 1) % HERO_IMAGES.length);
-    }, 8000); // Slower interval for relaxed luxurious feel
+    }, 8000); // Cycle every 8 seconds
 
     const handleScroll = () => {
       setScrollY(window.scrollY);
@@ -55,7 +55,6 @@ export const Home: React.FC = () => {
 
   const handleSearch = async () => {
     setIsSearching(true);
-    // Simulate slight delay for effect
     const unavailable = await checkAvailability(dates.checkIn, dates.checkOut);
     const allIds = (await getRooms()).map(r => r.id);
     const available = allIds.filter(id => !unavailable.includes(id));
@@ -72,8 +71,6 @@ export const Home: React.FC = () => {
         return;
     }
 
-    // Navigate to the summary page. If user is not logged in, ProtectedRoute will catch this
-    // and redirect them to Login, then back here.
     navigate(`/book?roomId=${room.id}&checkIn=${dates.checkIn}&checkOut=${dates.checkOut}`);
   };
 
@@ -84,11 +81,10 @@ export const Home: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
       
-      {/* Hero Section Container (Height Placeholder) */}
+      {/* Hero Section Container */}
       <div className="relative h-[85vh] w-full overflow-hidden">
         
         {/* Fixed Parallax Background Layer */}
-        {/* This creates the depth effect as content scrolls over it */}
         <div className="fixed top-0 left-0 w-full h-[85vh] z-0 pointer-events-none">
           {HERO_IMAGES.map((img, index) => (
             <div
@@ -97,9 +93,10 @@ export const Home: React.FC = () => {
                 index === currentHeroIndex ? 'opacity-100' : 'opacity-0'
               }`}
             >
+               {/* Ken Burns Effect: Smoother slow zoom animation */}
                <img 
                  src={img} 
-                 className={`w-full h-full object-cover transition-transform duration-[8000ms] ease-out ${
+                 className={`w-full h-full object-cover transform transition-transform duration-[10000ms] ease-out will-change-transform ${
                    index === currentHeroIndex ? 'scale-110' : 'scale-100'
                  }`} 
                  alt={`Luxury Hotel View ${index + 1}`} 
@@ -110,7 +107,6 @@ export const Home: React.FC = () => {
         </div>
 
         {/* Hero Content Layer (Parallax Text) */}
-        {/* Translates slower than scroll to create depth */}
         <div 
            className="relative z-10 h-full flex flex-col justify-center items-center text-center px-6 pt-20"
            style={{ 
@@ -181,14 +177,12 @@ export const Home: React.FC = () => {
       </div>
 
       {/* Main Page Content */}
-      {/* z-20 and background color ensures this slides OVER the fixed hero images */}
       <div className="relative z-20 bg-gray-50 shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.3)] border-t border-white/50">
         
         {/* Facilities Strip */}
         <div className="bg-white/80 backdrop-blur-sm py-16 border-b border-gray-100">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 text-center">
              {facilities.slice(0, 6).map(f => {
-               // Simple dynamic icon selection for demo
                let Icon = Star;
                if (f.name.includes('Wifi')) Icon = Wifi;
                if (f.name.includes('Car')) Icon = Car;
@@ -197,7 +191,6 @@ export const Home: React.FC = () => {
                
                return (
                  <div key={f.id} className="flex flex-col items-center gap-4 group cursor-pointer">
-                   {/* Glassy iOS Icon Container */}
                    <div className="relative w-20 h-20 rounded-[24px] flex items-center justify-center transition-all duration-300 transform group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-15px_rgba(37,99,235,0.3)] bg-gradient-to-br from-white to-gray-50 shadow-xl shadow-gray-200/50 border border-white">
                       <div className="absolute inset-0 rounded-[24px] bg-gradient-to-br from-blue-50/0 to-blue-50/80 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                       <Icon size={32} className="relative z-10 text-gray-400 group-hover:text-blue-600 transition-colors duration-300" strokeWidth={1.5} />
