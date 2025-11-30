@@ -75,8 +75,8 @@ export const Rooms: React.FC = () => {
     setCurrentMonth(newDate);
   };
 
-  const isDateBooked = (day: number) => {
-    if (!calendarRoom) return false;
+  const getBookingForDate = (day: number) => {
+    if (!calendarRoom) return null;
     
     // Construct date string YYYY-MM-DD (local time approximation for mock)
     const year = currentMonth.getFullYear();
@@ -84,7 +84,7 @@ export const Rooms: React.FC = () => {
     const dayStr = String(day).padStart(2, '0');
     const checkDate = `${year}-${month}-${dayStr}`;
 
-    return bookings.some(b => 
+    return bookings.find(b => 
       b.roomId === calendarRoom.id && 
       ['CONFIRMED', 'PENDING'].includes(b.status) &&
       checkDate >= b.checkIn && checkDate < b.checkOut
@@ -298,7 +298,9 @@ export const Rooms: React.FC = () => {
                 {/* Days */}
                 {Array.from({ length: getDaysInMonth(currentMonth.getFullYear(), currentMonth.getMonth()) }).map((_, i) => {
                   const day = i + 1;
-                  const booked = isDateBooked(day);
+                  const booking = getBookingForDate(day);
+                  const isBooked = !!booking;
+                  const isPending = booking?.status === 'PENDING';
                   const isToday = 
                     new Date().getDate() === day && 
                     new Date().getMonth() === currentMonth.getMonth() && 
@@ -308,14 +310,16 @@ export const Rooms: React.FC = () => {
                     <div 
                       key={day} 
                       className={`
-                        aspect-square rounded-lg flex items-center justify-center text-sm font-medium transition-all relative
-                        ${booked 
-                          ? 'bg-red-50 text-red-600 border border-red-100' 
+                        aspect-square rounded-lg flex items-center justify-center text-sm font-medium transition-all relative cursor-help
+                        ${isBooked 
+                          ? (isPending 
+                              ? 'bg-amber-50 text-amber-600 border border-amber-100' 
+                              : 'bg-red-50 text-red-600 border border-red-100')
                           : 'bg-green-50 text-green-700 border border-green-100 hover:bg-green-100'
                         }
                         ${isToday ? 'ring-2 ring-blue-500 ring-offset-1' : ''}
                       `}
-                      title={booked ? 'Occupied' : 'Available'}
+                      title={isBooked ? `${isPending ? 'Pending' : 'Confirmed'}: ${booking?.guestName}` : 'Available'}
                     >
                       {day}
                     </div>
@@ -323,14 +327,18 @@ export const Rooms: React.FC = () => {
                 })}
               </div>
 
-              <div className="flex gap-4 mt-6 text-sm justify-center">
+              <div className="flex gap-4 mt-6 text-xs justify-center font-medium">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-green-100 border border-green-200"></div>
                   <span className="text-gray-600">Available</span>
                 </div>
                 <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-amber-100 border border-amber-200"></div>
+                  <span className="text-gray-600">Pending</span>
+                </div>
+                <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-red-100 border border-red-200"></div>
-                  <span className="text-gray-600">Booked</span>
+                  <span className="text-gray-600">Confirmed</span>
                 </div>
               </div>
             </div>
