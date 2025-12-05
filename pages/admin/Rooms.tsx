@@ -37,7 +37,8 @@ export const Rooms: React.FC = () => {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (currentRoom.name && currentRoom.pricePerNight) {
+    // Validate that description is present along with other required fields
+    if (currentRoom.name && currentRoom.pricePerNight && currentRoom.description) {
       await saveRoom({
         ...currentRoom,
         // Use provided image or fallback to picsum placeholder
@@ -133,13 +134,16 @@ export const Rooms: React.FC = () => {
               
               {/* Description Field - Full Width */}
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium mb-1">Description</label>
+                <label className="block text-sm font-medium mb-1">
+                  Description 
+                  <span className="text-gray-400 font-normal ml-1 text-xs">(Visible to guests)</span>
+                </label>
                 <textarea 
-                  className="w-full border rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" 
-                  rows={3}
+                  className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none resize-y min-h-[100px]" 
+                  rows={4}
                   value={currentRoom.description || ''} 
                   onChange={e => setCurrentRoom({...currentRoom, description: e.target.value})} 
-                  placeholder="Enter a detailed description of the room..."
+                  placeholder="Describe the room's amenities, view, and unique features..."
                   required 
                 />
               </div>
@@ -238,7 +242,7 @@ export const Rooms: React.FC = () => {
                 <h3 className="font-bold text-lg">{room.name}</h3>
                 <span className="font-semibold text-blue-600">NPR {room.pricePerNight.toLocaleString()}</span>
               </div>
-              <p className="text-gray-500 text-sm mb-4 flex-1 line-clamp-3">{room.description}</p>
+              <p className="text-gray-500 text-sm mb-4 flex-1 line-clamp-3" title={room.description}>{room.description}</p>
               
               <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
                 <span className="flex items-center gap-1"><Users size={16} /> {room.capacity} Guests</span>
