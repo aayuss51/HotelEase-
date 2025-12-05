@@ -54,6 +54,12 @@ export const Home: React.FC = () => {
     };
   }, []);
 
+  const getNextDay = (dateStr: string) => {
+    const date = new Date(dateStr);
+    date.setDate(date.getDate() + 1);
+    return date.toISOString().split('T')[0];
+  };
+
   const validateDates = () => {
     const start = new Date(dates.checkIn);
     const end = new Date(dates.checkOut);
@@ -145,7 +151,7 @@ export const Home: React.FC = () => {
                    value={dates.checkIn}
                    min={new Date().toISOString().split('T')[0]}
                    onChange={e => {
-                     setDates({...dates, checkIn: e.target.value});
+                     setDates(prev => ({...prev, checkIn: e.target.value}));
                      setDateError('');
                    }}
                  />
@@ -159,9 +165,9 @@ export const Home: React.FC = () => {
                    type="date" 
                    className="w-full pl-12 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:ring-2 focus:ring-blue-400 focus:bg-white/20 focus:outline-none transition-all"
                    value={dates.checkOut}
-                   min={dates.checkIn}
+                   min={getNextDay(dates.checkIn)}
                    onChange={e => {
-                     setDates({...dates, checkOut: e.target.value});
+                     setDates(prev => ({...prev, checkOut: e.target.value}));
                      setDateError('');
                    }}
                  />
