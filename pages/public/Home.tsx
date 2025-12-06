@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getRooms, getFacilities, checkAvailability } from '../../services/mockDb';
 import { RoomType, Facility } from '../../types';
 import { Button } from '../../components/Button';
+import { ImageWithSkeleton } from '../../components/ImageWithSkeleton';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Users, Wifi, Car, Calendar, Star, Coffee, Waves, Loader2, AlertCircle } from 'lucide-react';
@@ -109,7 +110,7 @@ export const Home: React.FC = () => {
               }`}
             >
                {/* Ken Burns Effect: Smoother slow zoom animation, reduced to 5% scale */}
-               <img 
+               <ImageWithSkeleton 
                  src={img} 
                  className={`w-full h-full object-cover transform transition-transform duration-[10000ms] ease-out will-change-transform ${
                    index === currentHeroIndex ? 'scale-105' : 'scale-100'
@@ -252,7 +253,7 @@ export const Home: React.FC = () => {
               {displayedRooms.map(room => (
                 <div key={room.id} className="group bg-white rounded-[32px] shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 flex flex-col h-full hover:-translate-y-1">
                   <div className="h-80 relative overflow-hidden">
-                    <img 
+                    <ImageWithSkeleton 
                       src={room.imageUrl} 
                       alt={room.name} 
                       className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 

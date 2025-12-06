@@ -5,6 +5,7 @@ import { Booking, RoomType } from '../../types';
 import { Calendar, BedDouble, CheckCircle, Clock, XCircle, RefreshCw, CheckCheck, History, AlertTriangle, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '../../components/Button';
+import { ImageWithSkeleton } from '../../components/ImageWithSkeleton';
 
 const getStatusColor = (status: string) => {
   switch(status) {
@@ -50,7 +51,7 @@ const BookingCard: React.FC<BookingCardProps> = ({ booking, rooms, onCancel, isH
       {/* Room Image */}
       <div className={`w-full md:w-56 h-40 rounded-xl overflow-hidden bg-gray-200 shrink-0 relative group ${isHistory ? 'grayscale opacity-75' : ''}`}>
         {room ? (
-          <img src={room.imageUrl} alt={room.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          <ImageWithSkeleton src={room.imageUrl} alt={room.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-gray-400">
             <BedDouble size={24} />

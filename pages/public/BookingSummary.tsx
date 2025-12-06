@@ -4,6 +4,7 @@ import { getRoom, createBooking, getFacilities } from '../../services/mockDb';
 import { RoomType, Facility, Booking } from '../../types';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/Button';
+import { ImageWithSkeleton } from '../../components/ImageWithSkeleton';
 import { Calendar, Users, ArrowLeft, CheckCircle, Loader2, FileText, Printer, Clock, Share2, Copy, Check } from 'lucide-react';
 
 export const BookingSummary: React.FC = () => {
@@ -228,7 +229,11 @@ export const BookingSummary: React.FC = () => {
         
         {/* Left Side - Image */}
         <div className="w-full md:w-2/5 relative h-64 md:h-auto group">
-          <img src={room.imageUrl} alt={room.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          <ImageWithSkeleton 
+            src={room.imageUrl} 
+            alt={room.name} 
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-8">
             <div className="text-white">
               <h2 className="text-3xl font-bold font-serif leading-tight">{room.name}</h2>

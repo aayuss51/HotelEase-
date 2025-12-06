@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getRooms, saveRoom, deleteRoom, getFacilities, getBookings } from '../../services/mockDb';
 import { RoomType, Facility, Booking } from '../../types';
 import { Button } from '../../components/Button';
+import { ImageWithSkeleton } from '../../components/ImageWithSkeleton';
 import { Plus, Trash2, Edit2, Users, DollarSign, Loader2, Image as ImageIcon, Calendar as CalendarIcon, ChevronLeft, ChevronRight, X, Upload } from 'lucide-react';
 
 export const Rooms: React.FC = () => {
@@ -183,11 +184,11 @@ export const Rooms: React.FC = () => {
                   {/* Preview */}
                   {currentRoom.imageUrl ? (
                     <div className="relative w-full h-48 rounded-lg overflow-hidden border border-gray-200 group">
-                      <img src={currentRoom.imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                      <ImageWithSkeleton src={currentRoom.imageUrl} alt="Preview" className="w-full h-full object-cover" />
                       <button 
                         type="button"
                         onClick={() => setCurrentRoom({...currentRoom, imageUrl: ''})}
-                        className="absolute top-2 right-2 bg-white/90 p-1.5 rounded-full text-red-600 hover:bg-white shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="absolute top-2 right-2 bg-white/90 p-1.5 rounded-full text-red-600 hover:bg-white shadow-sm opacity-0 group-hover:opacity-100 transition-opacity z-10"
                         title="Remove Image"
                       >
                         <X size={16} />
@@ -236,8 +237,8 @@ export const Rooms: React.FC = () => {
         {rooms.map(room => (
           <div key={room.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col hover:shadow-lg transition-shadow">
             <div className="h-48 overflow-hidden relative group">
-              <img src={room.imageUrl} alt={room.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-              <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <ImageWithSkeleton src={room.imageUrl} alt={room.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+              <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-10">
                  <button onClick={() => handleEdit(room)} className="p-2 bg-white/90 rounded-full hover:text-blue-600 shadow-sm"><Edit2 size={16} /></button>
                  <button onClick={async () => { if(window.confirm('Delete?')) { await deleteRoom(room.id); loadData(false); }}} className="p-2 bg-white/90 rounded-full hover:text-red-600 shadow-sm"><Trash2 size={16} /></button>
               </div>
