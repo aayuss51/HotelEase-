@@ -13,31 +13,34 @@ export const Facilities: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentFacility, setCurrentFacility] = useState<Partial<Facility>>({});
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    loadData();
+    loadData(true);
   }, []);
 
-  const loadData = async () => {
-    setIsLoading(true);
+  const loadData = async (showLoading = true) => {
+    if (showLoading) setIsLoading(true);
     setFacilities(await getFacilities());
-    setIsLoading(false);
+    if (showLoading) setIsLoading(false);
   };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (currentFacility.name && currentFacility.icon) {
+      setIsSubmitting(true);
       await saveFacility(currentFacility as Facility);
+      await loadData(false); // Background refresh
+      setIsSubmitting(false);
       setIsEditing(false);
       setCurrentFacility({});
-      loadData();
     }
   };
 
   const handleDelete = async (id: string) => {
     if (window.confirm('Delete this facility?')) {
       await deleteFacility(id);
-      loadData();
+      loadData(false);
     }
   };
 
@@ -88,8 +91,10 @@ export const Facilities: React.FC = () => {
               </select>
             </div>
             <div className="flex gap-2">
-               <Button type="submit">Save</Button>
-               <Button type="button" variant="secondary" onClick={() => setIsEditing(false)}>Cancel</Button>
+               <Button type="submit" disabled={isSubmitting}>
+                 {isSubmitting ? <Loader2 size={16} className="animate-spin" /> : 'Save'}
+               </Button>
+               <Button type="button" variant="secondary" onClick={() => setIsEditing(false)} disabled={isSubmitting}>Cancel</Button>
             </div>
           </form>
         </div>

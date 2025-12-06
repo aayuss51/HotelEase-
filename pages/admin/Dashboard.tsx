@@ -89,7 +89,7 @@ export const Dashboard: React.FC = () => {
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 lg:col-span-2">
           <h3 className="font-bold text-lg mb-6">Room Status Today</h3>
           <div className="h-64">
-             {stats ? (
+             {stats && (
                <ResponsiveContainer width="100%" height="100%">
                  <BarChart data={chartData}>
                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
@@ -102,8 +102,6 @@ export const Dashboard: React.FC = () => {
                    <Bar dataKey="value" fill="#3b82f6" radius={[6, 6, 0, 0]} barSize={50} />
                  </BarChart>
                </ResponsiveContainer>
-             ) : (
-               <div className="flex items-center justify-center h-full text-gray-400">No Data Available</div>
              )}
           </div>
         </div>

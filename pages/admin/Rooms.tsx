@@ -11,22 +11,23 @@ export const Rooms: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentRoom, setCurrentRoom] = useState<Partial<RoomType>>({});
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Calendar State
   const [calendarRoom, setCalendarRoom] = useState<RoomType | null>(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   useEffect(() => {
-    loadData();
+    loadData(true);
   }, []);
 
-  const loadData = async () => {
-    setIsLoading(true);
+  const loadData = async (showLoading = true) => {
+    if (showLoading) setIsLoading(true);
     const [r, f, b] = await Promise.all([getRooms(), getFacilities(), getBookings()]);
     setRooms(r);
     setFacilities(f);
     setBookings(b);
-    setIsLoading(false);
+    if (showLoading) setIsLoading(false);
   };
 
   const handleEdit = (room: RoomType) => {
@@ -37,16 +38,18 @@ export const Rooms: React.FC = () => {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Validate that description is present along with other required fields
     if (currentRoom.name && currentRoom.pricePerNight && currentRoom.description) {
+      setIsSubmitting(true);
       await saveRoom({
         ...currentRoom,
         // Use provided image or fallback to picsum placeholder
         imageUrl: currentRoom.imageUrl || `https://picsum.photos/800/600?random=${Math.random()}`
       } as RoomType);
+      
+      await loadData(false); // Background refresh
+      setIsSubmitting(false);
       setIsEditing(false);
       setCurrentRoom({});
-      loadData();
     }
   };
 
@@ -220,8 +223,10 @@ export const Rooms: React.FC = () => {
             </div>
 
             <div className="flex gap-3 pt-4">
-               <Button type="submit">Save Room</Button>
-               <Button type="button" variant="secondary" onClick={() => setIsEditing(false)}>Cancel</Button>
+               <Button type="submit" disabled={isSubmitting} className="min-w-[120px]">
+                 {isSubmitting ? <><Loader2 size={16} className="mr-2 animate-spin"/> Saving...</> : 'Save Room'}
+               </Button>
+               <Button type="button" variant="secondary" onClick={() => setIsEditing(false)} disabled={isSubmitting}>Cancel</Button>
             </div>
           </form>
         </div>
@@ -234,7 +239,7 @@ export const Rooms: React.FC = () => {
               <img src={room.imageUrl} alt={room.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
               <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                  <button onClick={() => handleEdit(room)} className="p-2 bg-white/90 rounded-full hover:text-blue-600 shadow-sm"><Edit2 size={16} /></button>
-                 <button onClick={async () => { if(window.confirm('Delete?')) { await deleteRoom(room.id); loadData(); }}} className="p-2 bg-white/90 rounded-full hover:text-red-600 shadow-sm"><Trash2 size={16} /></button>
+                 <button onClick={async () => { if(window.confirm('Delete?')) { await deleteRoom(room.id); loadData(false); }}} className="p-2 bg-white/90 rounded-full hover:text-red-600 shadow-sm"><Trash2 size={16} /></button>
               </div>
             </div>
             <div className="p-5 flex-1 flex flex-col">

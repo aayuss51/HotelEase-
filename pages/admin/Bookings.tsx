@@ -7,25 +7,27 @@ export const Bookings: React.FC = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [filter, setFilter] = useState<'ALL' | 'PENDING' | 'CONFIRMED' | 'CANCELLED'>('ALL');
   const [isLoading, setIsLoading] = useState(true);
+  const [processingId, setProcessingId] = useState<string | null>(null);
 
   useEffect(() => {
-    loadData();
+    loadData(true);
   }, []);
 
-  const loadData = async () => {
-    setIsLoading(true);
+  const loadData = async (showLoading = true) => {
+    if (showLoading) setIsLoading(true);
     setBookings(await getBookings());
-    setIsLoading(false);
+    if (showLoading) setIsLoading(false);
   };
 
   const handleStatusChange = async (id: string, status: Booking['status']) => {
+    setProcessingId(id);
     await updateBookingStatus(id, status);
-    loadData();
+    await loadData(false); // Refresh in background
+    setProcessingId(null);
   };
 
   const handleCopyId = (id: string) => {
     navigator.clipboard.writeText(id);
-    // Optional: could add toast notification here
   };
 
   const filteredBookings = bookings.filter(b => filter === 'ALL' || b.status === filter);
@@ -126,22 +128,33 @@ export const Bookings: React.FC = () => {
                       <div className="flex gap-2">
                         <button 
                           onClick={() => handleStatusChange(booking.id, 'CONFIRMED')} 
-                          className="flex items-center gap-1 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 px-3 py-1.5 rounded-lg border border-emerald-200 transition-colors" 
+                          disabled={!!processingId}
+                          className="flex items-center gap-1 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 px-3 py-1.5 rounded-lg border border-emerald-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" 
                           title="Approve"
                         >
-                          <Check size={16} /> <span className="text-xs">Approve</span>
+                          {processingId === booking.id ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />} 
+                          <span className="text-xs">Approve</span>
                         </button>
                         <button 
                           onClick={() => handleStatusChange(booking.id, 'REJECTED')} 
-                          className="flex items-center gap-1 bg-rose-50 text-rose-700 hover:bg-rose-100 px-3 py-1.5 rounded-lg border border-rose-200 transition-colors" 
+                          disabled={!!processingId}
+                          className="flex items-center gap-1 bg-rose-50 text-rose-700 hover:bg-rose-100 px-3 py-1.5 rounded-lg border border-rose-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" 
                           title="Reject"
                         >
-                          <X size={16} /> <span className="text-xs">Reject</span>
+                          {processingId === booking.id ? <Loader2 size={16} className="animate-spin" /> : <X size={16} />}
+                          <span className="text-xs">Reject</span>
                         </button>
                       </div>
                     )}
                     {booking.status === 'CONFIRMED' && (
-                       <button onClick={() => handleStatusChange(booking.id, 'COMPLETED')} className="text-blue-600 hover:text-blue-800 text-xs font-semibold hover:underline">Mark Completed</button>
+                       <button 
+                         onClick={() => handleStatusChange(booking.id, 'COMPLETED')} 
+                         disabled={!!processingId}
+                         className="text-blue-600 hover:text-blue-800 text-xs font-semibold hover:underline flex items-center gap-2"
+                       >
+                         {processingId === booking.id && <Loader2 size={12} className="animate-spin" />}
+                         Mark Completed
+                       </button>
                     )}
                   </td>
                 </tr>
