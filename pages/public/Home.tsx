@@ -143,12 +143,12 @@ export const Home: React.FC = () => {
           {/* Search Box */}
           <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-2xl max-w-5xl w-full flex flex-col lg:flex-row gap-6 items-end text-left mt-8 ring-1 ring-white/20 hover:bg-white/15 transition-colors">
              <div className="flex-1 w-full">
-               <label className="block text-xs font-bold text-blue-100 uppercase tracking-wider mb-2">Check In</label>
+               <label className="block text-xs font-bold text-white uppercase tracking-wider mb-2 drop-shadow-md">Check In</label>
                <div className="relative group">
-                 <Calendar className="absolute left-4 top-3.5 text-white/70 group-hover:text-white transition-colors" size={20} />
+                 <Calendar className="absolute left-4 top-3.5 text-gray-500 group-focus-within:text-blue-600 transition-colors z-10" size={20} />
                  <input 
                    type="date" 
-                   className="w-full pl-12 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:ring-2 focus:ring-blue-400 focus:bg-white/20 focus:outline-none transition-all"
+                   className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all shadow-lg"
                    value={dates.checkIn}
                    min={new Date().toISOString().split('T')[0]}
                    onChange={e => {
@@ -159,12 +159,12 @@ export const Home: React.FC = () => {
                </div>
              </div>
              <div className="flex-1 w-full">
-               <label className="block text-xs font-bold text-blue-100 uppercase tracking-wider mb-2">Check Out</label>
+               <label className="block text-xs font-bold text-white uppercase tracking-wider mb-2 drop-shadow-md">Check Out</label>
                <div className="relative group">
-                 <Calendar className="absolute left-4 top-3.5 text-white/70 group-hover:text-white transition-colors" size={20} />
+                 <Calendar className="absolute left-4 top-3.5 text-gray-500 group-focus-within:text-blue-600 transition-colors z-10" size={20} />
                  <input 
                    type="date" 
-                   className="w-full pl-12 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:ring-2 focus:ring-blue-400 focus:bg-white/20 focus:outline-none transition-all"
+                   className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all shadow-lg"
                    value={dates.checkOut}
                    min={getNextDay(dates.checkIn)}
                    onChange={e => {
@@ -177,7 +177,7 @@ export const Home: React.FC = () => {
              <button 
                 onClick={handleSearch} 
                 disabled={isSearching}
-                className="w-full lg:w-auto h-[50px] px-8 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg shadow-lg hover:shadow-blue-600/40 transition-all transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full lg:w-auto h-[50px] px-8 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-blue-600/40 transition-all transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
              >
                {isSearching && <Loader2 className="animate-spin" size={20} />}
                {isSearching ? 'Checking...' : 'Check Availability'}

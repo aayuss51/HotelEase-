@@ -3,7 +3,7 @@ import { getRooms, saveRoom, deleteRoom, getFacilities, getBookings } from '../.
 import { RoomType, Facility, Booking } from '../../types';
 import { Button } from '../../components/Button';
 import { ImageWithSkeleton } from '../../components/ImageWithSkeleton';
-import { Plus, Trash2, Edit2, Users, DollarSign, Loader2, Image as ImageIcon, Calendar as CalendarIcon, ChevronLeft, ChevronRight, X, Upload } from 'lucide-react';
+import { Plus, Trash2, Edit2, Users, DollarSign, Loader2, Image as ImageIcon, Calendar as CalendarIcon, ChevronLeft, ChevronRight, X, Upload, Info } from 'lucide-react';
 
 export const Rooms: React.FC = () => {
   const [rooms, setRooms] = useState<RoomType[]>([]);
@@ -98,6 +98,16 @@ export const Rooms: React.FC = () => {
       b.roomId === calendarRoom.id && 
       ['CONFIRMED', 'PENDING'].includes(b.status) &&
       checkDate >= b.checkIn && checkDate < b.checkOut
+    );
+  };
+
+  const getActiveBookings = (roomId: string) => {
+    const today = new Date().toISOString().split('T')[0];
+    return bookings.filter(b => 
+      b.roomId === roomId && 
+      b.status === 'CONFIRMED' &&
+      b.checkIn <= today && 
+      b.checkOut > today
     );
   };
 
@@ -247,45 +257,73 @@ export const Rooms: React.FC = () => {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {rooms.map(room => (
-          <div key={room.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col hover:shadow-lg transition-shadow">
-            <div className="h-48 overflow-hidden relative group bg-gray-100">
-              <ImageWithSkeleton src={room.imageUrl} alt={room.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-              <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                 <button onClick={() => handleEdit(room)} className="p-2 bg-white/90 rounded-full hover:text-blue-600 shadow-sm"><Edit2 size={16} /></button>
-                 <button onClick={async () => { if(window.confirm('Delete?')) { await deleteRoom(room.id); loadData(false); }}} className="p-2 bg-white/90 rounded-full hover:text-red-600 shadow-sm"><Trash2 size={16} /></button>
+        {rooms.map(room => {
+          const activeBookings = getActiveBookings(room.id);
+          
+          return (
+            <div key={room.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col hover:shadow-lg transition-shadow">
+              <div className="h-48 overflow-hidden relative group bg-gray-100">
+                <ImageWithSkeleton src={room.imageUrl} alt={room.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                
+                {/* Active Booking Info Badge */}
+                {activeBookings.length > 0 && (
+                  <div className="absolute top-2 left-2 z-20 group/info">
+                    <div className="bg-white/90 backdrop-blur-md p-1.5 rounded-full text-blue-600 shadow-sm cursor-help hover:bg-white transition-colors border border-blue-100">
+                      <Info size={16} />
+                    </div>
+                    {/* Custom Tooltip */}
+                    <div className="absolute top-full left-0 mt-2 w-max max-w-[220px] bg-gray-900/95 backdrop-blur rounded-lg shadow-xl p-3 text-white text-xs opacity-0 invisible group-hover/info:opacity-100 group-hover/info:visible transition-all transform origin-top-left scale-95 group-hover/info:scale-100 pointer-events-none z-50">
+                      <p className="font-bold mb-2 text-gray-400 uppercase tracking-wider text-[10px] border-b border-gray-700 pb-1">
+                        Currently Occupied ({activeBookings.length})
+                      </p>
+                      <div className="space-y-2 max-h-32 overflow-y-auto custom-scrollbar">
+                        {activeBookings.map(b => (
+                          <div key={b.id} className="border-l-2 border-blue-500 pl-2">
+                            <p className="font-mono font-bold text-blue-200">#{b.id}</p>
+                            <p className="truncate text-gray-300">{b.guestName}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                   <button onClick={() => handleEdit(room)} className="p-2 bg-white/90 rounded-full hover:text-blue-600 shadow-sm transition-colors"><Edit2 size={16} /></button>
+                   <button onClick={async () => { if(window.confirm('Delete?')) { await deleteRoom(room.id); loadData(false); }}} className="p-2 bg-white/90 rounded-full hover:text-red-600 shadow-sm transition-colors"><Trash2 size={16} /></button>
+                </div>
+              </div>
+              <div className="p-5 flex-1 flex flex-col">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="font-bold text-lg">{room.name}</h3>
+                  <span className="font-semibold text-blue-600">NPR {room.pricePerNight.toLocaleString()}</span>
+                </div>
+                <p className="text-gray-500 text-sm mb-4 flex-1 line-clamp-3" title={room.description}>{room.description}</p>
+                
+                <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                  <span className="flex items-center gap-1"><Users size={16} /> {room.capacity} Guests</span>
+                  <span className="flex items-center gap-1"><DollarSign size={16} /> {room.totalStock} Available</span>
+                </div>
+
+                <div className="flex flex-wrap gap-1 mb-4">
+                  {room.facilityIds.map(fid => {
+                     const fac = facilities.find(f => f.id === fid);
+                     return fac ? <span key={fid} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">{fac.name}</span> : null;
+                  })}
+                </div>
+
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full mt-auto flex items-center justify-center gap-2 border-blue-200 text-blue-600 hover:bg-blue-50"
+                  onClick={() => setCalendarRoom(room)}
+                >
+                  <CalendarIcon size={16} /> View Availability
+                </Button>
               </div>
             </div>
-            <div className="p-5 flex-1 flex flex-col">
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="font-bold text-lg">{room.name}</h3>
-                <span className="font-semibold text-blue-600">NPR {room.pricePerNight.toLocaleString()}</span>
-              </div>
-              <p className="text-gray-500 text-sm mb-4 flex-1 line-clamp-3" title={room.description}>{room.description}</p>
-              
-              <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
-                <span className="flex items-center gap-1"><Users size={16} /> {room.capacity} Guests</span>
-                <span className="flex items-center gap-1"><DollarSign size={16} /> {room.totalStock} Available</span>
-              </div>
-
-              <div className="flex flex-wrap gap-1 mb-4">
-                {room.facilityIds.map(fid => {
-                   const fac = facilities.find(f => f.id === fid);
-                   return fac ? <span key={fid} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">{fac.name}</span> : null;
-                })}
-              </div>
-
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="w-full mt-auto flex items-center justify-center gap-2 border-blue-200 text-blue-600 hover:bg-blue-50"
-                onClick={() => setCalendarRoom(room)}
-              >
-                <CalendarIcon size={16} /> View Availability
-              </Button>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Availability Calendar Modal */}
