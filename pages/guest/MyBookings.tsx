@@ -10,16 +10,16 @@ import { ImageWithSkeleton } from '../../components/ImageWithSkeleton';
 const getStatusColor = (status: string) => {
   switch(status) {
     case 'CONFIRMED': 
-      return 'bg-emerald-50 text-emerald-700 border-emerald-200 ring-1 ring-emerald-500/20';
+      return 'bg-green-100 text-green-800 border-green-200 ring-1 ring-green-600/20';
     case 'PENDING': 
-      return 'bg-amber-50 text-amber-700 border-amber-200 ring-1 ring-amber-500/20';
+      return 'bg-yellow-100 text-yellow-800 border-yellow-200 ring-1 ring-yellow-600/20';
     case 'CANCELLED': 
     case 'REJECTED': 
-      return 'bg-rose-50 text-rose-700 border-rose-200 ring-1 ring-rose-500/20';
+      return 'bg-red-100 text-red-800 border-red-200 ring-1 ring-red-600/20';
     case 'COMPLETED': 
-      return 'bg-blue-50 text-blue-700 border-blue-200 ring-1 ring-blue-500/20';
+      return 'bg-blue-100 text-blue-800 border-blue-200 ring-1 ring-blue-600/20';
     default: 
-      return 'bg-gray-50 text-gray-700 border-gray-200 ring-1 ring-gray-500/20';
+      return 'bg-gray-100 text-gray-800 border-gray-200 ring-1 ring-gray-500/20';
   }
 };
 
@@ -74,13 +74,13 @@ const BookingCard: React.FC<BookingCardProps> = ({ booking, rooms, onCancel, isH
           </div>
           
           {!isHistory && booking.status === 'PENDING' && (
-            <div className="flex items-start gap-2 text-sm text-amber-800 bg-amber-50 p-3 rounded-lg border border-amber-200 mb-4">
+            <div className="flex items-start gap-2 text-sm text-yellow-800 bg-yellow-50 p-3 rounded-lg border border-yellow-200 mb-4">
               <Clock size={16} className="mt-0.5 shrink-0"/>
               <p>Your reservation is awaiting confirmation from the hotel staff. You will be notified once processed.</p>
             </div>
           )}
           {!isHistory && booking.status === 'REJECTED' && (
-             <div className="flex items-start gap-2 text-sm text-rose-800 bg-rose-50 p-3 rounded-lg border border-rose-200 mb-4">
+             <div className="flex items-start gap-2 text-sm text-red-800 bg-red-50 p-3 rounded-lg border border-red-200 mb-4">
                <XCircle size={16} className="mt-0.5 shrink-0"/>
                <p>Unfortunately, this reservation was not approved. Please contact support or try different dates.</p>
              </div>

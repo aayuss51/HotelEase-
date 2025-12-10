@@ -44,8 +44,8 @@ export const Rooms: React.FC = () => {
       
       const roomToSave = {
         ...currentRoom,
-        // Use provided image or fallback to picsum placeholder
-        imageUrl: currentRoom.imageUrl || `https://picsum.photos/800/600?random=${Math.random()}`
+        // Use provided image or fallback to picsum placeholder if empty
+        imageUrl: currentRoom.imageUrl ? currentRoom.imageUrl : `https://picsum.photos/800/600?random=${Math.random()}`
       } as RoomType;
 
       await saveRoom(roomToSave);
@@ -381,16 +381,19 @@ export const Rooms: React.FC = () => {
                     <div 
                       key={day} 
                       className={`
-                        aspect-square rounded-lg flex items-center justify-center text-sm font-medium transition-all relative cursor-help
+                        aspect-square rounded-lg flex items-center justify-center text-sm font-medium transition-all duration-200 relative cursor-help
                         ${isBooked 
                           ? (isPending 
-                              ? 'bg-amber-50 text-amber-600 border border-amber-100 hover:bg-amber-100 hover:shadow-sm' 
-                              : 'bg-red-50 text-red-600 border border-red-100 hover:bg-red-100 hover:shadow-sm')
-                          : 'bg-green-50 text-green-700 border border-green-100 hover:bg-green-100'
+                              ? 'bg-amber-50 text-amber-600 border border-amber-100 hover:bg-amber-100 hover:scale-110 hover:shadow-md hover:z-10' 
+                              : 'bg-red-50 text-red-600 border border-red-100 hover:bg-red-100 hover:scale-110 hover:shadow-md hover:z-10')
+                          : 'bg-green-50 text-green-700 border border-green-100 hover:bg-green-100 hover:scale-105 hover:shadow-sm hover:z-10'
                         }
                         ${isToday ? 'ring-2 ring-blue-500 ring-offset-1' : ''}
                       `}
-                      title={isBooked ? `${isPending ? 'Pending' : 'Confirmed'} #${booking?.id}\nGuest: ${booking?.guestName}` : 'Available'}
+                      title={isBooked 
+                        ? `Booking ID: #${booking?.id}\nGuest: ${booking?.guestName}\nStatus: ${isPending ? 'Pending (Awaiting Approval)' : 'Confirmed'}` 
+                        : 'Available'
+                      }
                     >
                       {day}
                     </div>

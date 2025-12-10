@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, BedDouble, Dumbbell, CalendarDays, LogOut } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { UserRole } from '../../types';
@@ -19,12 +19,16 @@ interface AdminLayoutProps {
 export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
+
+  // Safety check: If user is somehow null here (despite ProtectedRoute), don't render content that relies on it.
+  if (!user) {
+    return null; 
+  }
 
   const navItems: NavItem[] = [
     { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, end: true },
@@ -42,9 +46,10 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const visibleNavItems = navItems.filter(item => {
     // If no specific roles are defined, it's open to all authenticated admins
     if (!item.allowedRoles) return true;
+    
     // Check if the current user has one of the allowed roles
-    // Use optional chaining to be safe
-    return user?.role && item.allowedRoles.includes(user.role);
+    // Use optional chaining and ensure user.role exists
+    return user.role && item.allowedRoles.includes(user.role);
   });
 
   return (
@@ -54,7 +59,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         <div className="p-6 border-b border-slate-700">
           <div className="flex flex-col">
             <h1 className="text-xl font-bold tracking-wider">Mero-Booking Admin</h1>
-            {user?.role && (
+            {user.role && (
               <span className="text-xs text-slate-400 uppercase mt-1 tracking-wide font-medium">
                 {user.role.replace('_', ' ')}
               </span>
@@ -63,29 +68,21 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         </div>
         
         <nav className="flex-1 p-4 space-y-2">
-          {visibleNavItems.map((item) => {
-            // Manual active check for v5 compatibility with custom class logic
-            // In v6 we could use NavLink's className function, but keeping logic similar for manual styling control
-            const isActive = item.end 
-              ? location.pathname === item.to 
-              : location.pathname.startsWith(item.to);
-
-            return (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.end}
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                  isActive 
-                    ? 'bg-blue-600 text-white' 
-                    : 'text-slate-300 hover:bg-slate-800 hover:text-white'
-                }`}
-              >
-                <item.icon size={20} />
-                <span>{item.label}</span>
-              </NavLink>
-            );
-          })}
+          {visibleNavItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.end}
+              className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                isActive 
+                  ? 'bg-blue-600 text-white' 
+                  : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+              }`}
+            >
+              <item.icon size={20} />
+              <span>{item.label}</span>
+            </NavLink>
+          ))}
         </nav>
 
         <div className="p-4 border-t border-slate-700">
