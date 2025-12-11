@@ -64,37 +64,38 @@ export const Facilities: React.FC = () => {
 
       {isEditing && (
         <div className="bg-white p-6 rounded-2xl shadow-sm mb-8 border border-gray-200">
-          <h3 className="text-lg font-semibold mb-4">{currentFacility.id ? 'Edit' : 'Add'} Facility</h3>
-          <form onSubmit={handleSave} className="flex gap-4 items-end">
-            <div className="flex-1">
+          <h3 className="text-lg font-semibold mb-4 text-gray-900">{currentFacility.id ? 'Edit' : 'Add'} Facility</h3>
+          <form onSubmit={handleSave} className="flex flex-col md:flex-row gap-4 items-end">
+            <div className="flex-1 w-full">
               <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
               <input
                 type="text"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-900 bg-white placeholder-gray-400"
                 value={currentFacility.name || ''}
                 onChange={e => setCurrentFacility({ ...currentFacility, name: e.target.value })}
+                placeholder="e.g., Spa & Wellness"
                 required
               />
             </div>
-            <div className="w-48">
+            <div className="w-full md:w-48">
               <label className="block text-sm font-medium text-gray-700 mb-1">Icon</label>
               <select
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-900 bg-white"
                 value={currentFacility.icon || ''}
                 onChange={e => setCurrentFacility({ ...currentFacility, icon: e.target.value })}
                 required
               >
-                <option value="">Select Icon</option>
+                <option value="" className="text-gray-500">Select Icon</option>
                 {Object.keys(ICON_MAP).map(key => (
-                  <option key={key} value={key}>{key}</option>
+                  <option key={key} value={key} className="text-gray-900">{key}</option>
                 ))}
               </select>
             </div>
-            <div className="flex gap-2">
-               <Button type="submit" disabled={isSubmitting}>
+            <div className="flex gap-2 w-full md:w-auto mt-2 md:mt-0">
+               <Button type="submit" disabled={isSubmitting} className="flex-1 md:flex-none">
                  {isSubmitting ? <Loader2 size={16} className="animate-spin" /> : 'Save'}
                </Button>
-               <Button type="button" variant="secondary" onClick={() => setIsEditing(false)} disabled={isSubmitting}>Cancel</Button>
+               <Button type="button" variant="secondary" onClick={() => setIsEditing(false)} disabled={isSubmitting} className="flex-1 md:flex-none">Cancel</Button>
             </div>
           </form>
         </div>
