@@ -6,8 +6,8 @@ import { getFacilities, getRooms } from '../services/mockDb';
 import { Facility, RoomType } from '../types';
 
 // Placeholder for your 3D Namaste Character
-// Replace this URL with your specific image path or URL
-const CONCIERGE_AVATAR = "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=256";
+// TODO: Please replace this URL with the direct link to the 3D character image you uploaded
+const CONCIERGE_AVATAR = "https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436185.jpg?w=200";
 
 // Authentic WhatsApp Logo SVG
 const WhatsAppIcon = ({ size = 24, className = "" }: { size?: number, className?: string }) => (
@@ -79,15 +79,11 @@ export const ConciergeChat: React.FC = () => {
 
   const handleEndChat = () => {
     setIsOpen(false);
-    // Reset chat history after a brief delay to allow window to close
     setTimeout(() => {
         setMessages([initialMessage]);
     }, 300);
   };
 
-  // --- Markdown Formatting Helpers ---
-
-  // 3. Italic Parser (*text*)
   const parseItalic = (text: string, pKey: number, bKey: number) => {
     const parts = text.split(/(\*.+?\*)/g);
     return parts.map((part, index) => {
@@ -98,7 +94,6 @@ export const ConciergeChat: React.FC = () => {
     });
   };
 
-  // 2. Bold Parser (**text**)
   const parseBold = (text: string, keyPrefix: number) => {
     const parts = text.split(/(\*\*.+?\*\*)/g);
     return parts.map((part, index) => {
@@ -109,7 +104,6 @@ export const ConciergeChat: React.FC = () => {
     });
   };
 
-  // 1. Root Inline Parser: Strikethrough (~~text~~) -> Bold -> Italic
   const parseInlineFormatting = (text: string) => {
     const parts = text.split(/(~~.+?~~)/g);
     return parts.map((part, index) => {
@@ -120,7 +114,6 @@ export const ConciergeChat: React.FC = () => {
     });
   };
 
-  // Main Text Renderer
   const renderFormattedText = (text: string) => {
     return text.split('\n').map((line, i) => {
       const trimmed = line.trim();
@@ -140,58 +133,63 @@ export const ConciergeChat: React.FC = () => {
 
   return (
     <>
-      {/* WhatsApp Button - Visible when chat is closed */}
+      {/* WhatsApp Button - Glassy Neumorphism */}
       {!isOpen && (
         <a
           href="https://api.whatsapp.com/send/?phone=9764453517&text=Hello+How+can+I+help+you%3F&type=phone_number&app_absent=0"
           target="_blank"
           rel="noopener noreferrer"
-          className="fixed bottom-24 right-6 w-16 h-16 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] shadow-2xl shadow-green-500/30 flex items-center justify-center text-white z-50 hover:scale-105 transition-all duration-300 border border-green-400/50 backdrop-blur-md group animate-fade-in-up"
+          className="fixed bottom-24 right-6 w-16 h-16 rounded-[24px] bg-[#25D366]/80 backdrop-blur-xl hover:bg-[#20bd5a]/90 shadow-[0_8px_32px_0_rgba(37,211,102,0.37)] border border-white/20 flex items-center justify-center text-white z-50 hover:scale-105 transition-all duration-300 group"
           title="Chat on WhatsApp"
         >
-          <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          {/* Inner Gloss */}
+          <div className="absolute inset-0 rounded-[24px] bg-gradient-to-tr from-white/10 to-transparent pointer-events-none"></div>
+          
           {/* Tooltip */}
-          <span className="absolute right-full mr-4 bg-white text-gray-800 text-xs font-bold px-3 py-1.5 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-gray-100 text-center">
+          <span className="absolute right-full mr-4 bg-white/70 backdrop-blur-md text-gray-800 text-xs font-bold px-3 py-1.5 rounded-xl shadow-[0_4px_16px_rgba(0,0,0,0.1)] opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-white/50 text-center">
             WhatsApp Us
           </span>
           <WhatsAppIcon size={32} />
         </a>
       )}
 
-      {/* Main Chat Toggle Button - Now uses Avatar Image */}
+      {/* Main Chat Toggle Button - Full Bleed Avatar with Glassy Container cues */}
       {!isOpen && (
         <button 
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400 via-green-500 to-emerald-600 shadow-2xl shadow-emerald-500/30 flex items-center justify-center text-white z-50 hover:scale-105 transition-all duration-300 border border-emerald-300 backdrop-blur-md group animate-fade-in-up p-0.5 overflow-hidden"
+          className="fixed bottom-6 right-6 w-16 h-16 rounded-[24px] bg-white/10 backdrop-blur-sm shadow-[0_8px_32px_0_rgba(0,0,0,0.2)] flex items-center justify-center z-50 hover:scale-105 transition-all duration-300 border border-white/40 p-0 group overflow-hidden"
           title="Chat with Concierge"
         >
-          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-          {/* Avatar Image Frame */}
-          <div className="w-full h-full rounded-[14px] overflow-hidden bg-white/10 relative">
-             <img 
-               src={CONCIERGE_AVATAR} 
-               alt="Concierge" 
-               className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" 
-             />
-             {/* Online Indicator */}
-             <div className="absolute bottom-1 right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white shadow-sm z-20"></div>
-          </div>
+          {/* Full-bleed Avatar Image */}
+          <img 
+            src={CONCIERGE_AVATAR} 
+            alt="Concierge" 
+            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out" 
+          />
+          {/* Subtle Glass Overlay for depth */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-transparent to-white/20 pointer-events-none"></div>
+          
+          {/* Online Indicator - Neumorphic Style */}
+          <div className="absolute bottom-1.5 right-1.5 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white/80 shadow-[0_0_8px_rgba(34,197,94,0.6)] z-10"></div>
         </button>
       )}
 
-      {/* Chat Window */}
+      {/* Chat Window - iOS 26 Glass Aesthetics */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl z-50 flex flex-col border border-white/20 overflow-hidden backdrop-blur-3xl ring-1 ring-black/5 animate-fade-in-up">
-          <div className="bg-gradient-to-r from-emerald-400 via-green-500 to-emerald-600 p-4 flex justify-between items-center text-white shadow-md">
+        <div className="fixed bottom-6 right-6 w-80 sm:w-96 h-[500px] bg-white/60 backdrop-blur-[40px] rounded-[32px] shadow-[0_20px_60px_-10px_rgba(0,0,0,0.15)] z-50 flex flex-col border border-white/40 overflow-hidden ring-1 ring-white/30 animate-fade-in-up transition-all">
+          
+          {/* Header - Transparent Glass */}
+          <div className="bg-white/30 backdrop-blur-xl p-4 flex justify-between items-center border-b border-white/20 shadow-sm relative z-10">
             <div className="flex items-center gap-3">
-              <div className="p-0.5 bg-white/20 rounded-full backdrop-blur-sm border border-white/30 flex items-center justify-center overflow-hidden w-10 h-10 shadow-sm">
+              <div className="p-0.5 bg-white/40 rounded-full backdrop-blur-md border border-white/40 flex items-center justify-center overflow-hidden w-11 h-11 shadow-inner">
                  <img src={CONCIERGE_AVATAR} alt="Bot" className="w-full h-full object-cover" />
               </div>
               <div className="flex flex-col">
-                  <h3 className="font-semibold tracking-wide text-sm leading-none flex items-center gap-1">
-                    Mero Support <div className="w-1.5 h-1.5 rounded-full bg-green-300 shadow-[0_0_5px_rgba(134,239,172,0.8)]"></div>
+                  <h3 className="font-bold tracking-wide text-sm leading-none flex items-center gap-1.5 text-slate-800">
+                    Mero Support 
+                    <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-pulse"></div>
                   </h3>
-                  <span className="text-[10px] text-emerald-100 opacity-90 mt-0.5">Online • Replies instantly</span>
+                  <span className="text-[10px] text-slate-500 font-medium mt-1">Online • Instant Reply</span>
               </div>
             </div>
             <div className="flex items-center gap-1">
@@ -199,21 +197,21 @@ export const ConciergeChat: React.FC = () => {
                   href="https://api.whatsapp.com/send/?phone=9764453517&text=Hello+How+can+I+help+you%3F&type=phone_number&app_absent=0"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:bg-white/20 p-1.5 rounded-lg transition-colors text-white/90 hover:text-white mr-1"
+                  className="hover:bg-white/50 p-2 rounded-xl transition-all text-slate-600 hover:text-green-600 hover:shadow-sm"
                   title="WhatsApp"
               >
                   <WhatsAppIcon size={18} />
               </a>
               <button 
                 onClick={handleMinimize} 
-                className="hover:bg-white/20 p-1.5 rounded-lg transition-colors"
+                className="hover:bg-white/50 p-2 rounded-xl transition-all text-slate-600 hover:text-slate-900 hover:shadow-sm"
                 title="Minimize"
               >
                 <Minus size={18} />
               </button>
               <button 
                 onClick={handleEndChat} 
-                className="hover:bg-white/20 hover:text-red-100 p-1.5 rounded-lg transition-colors"
+                className="hover:bg-red-50/50 p-2 rounded-xl transition-all text-slate-600 hover:text-red-500 hover:shadow-sm"
                 title="End Chat"
               >
                 <X size={18} />
@@ -221,33 +219,34 @@ export const ConciergeChat: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex-1 h-96 overflow-y-auto p-4 space-y-4 bg-gray-50/80 custom-scrollbar">
+          {/* Chat Area - Soft Texture */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-transparent via-white/10 to-white/20 custom-scrollbar scroll-smooth">
             {messages.map((msg, idx) => (
-              <div key={idx} className={`flex w-full ${msg.role === 'user' ? 'justify-end' : 'justify-start gap-2 items-end'}`}>
+              <div key={idx} className={`flex w-full ${msg.role === 'user' ? 'justify-end' : 'justify-start gap-3 items-end'}`}>
                 
                 {msg.role === 'ai' && (
-                   <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center shrink-0 shadow-sm border border-white mb-1 overflow-hidden">
+                   <div className="w-8 h-8 rounded-full bg-white/50 backdrop-blur flex items-center justify-center shrink-0 shadow-sm border border-white/50 mb-1 overflow-hidden">
                       <img src={CONCIERGE_AVATAR} alt="AI" className="w-full h-full object-cover" />
                    </div>
                 )}
 
-                <div className={`max-w-[80%] rounded-2xl p-3.5 text-sm shadow-sm leading-relaxed ${
+                <div className={`max-w-[80%] rounded-[20px] p-3.5 text-sm leading-relaxed backdrop-blur-md shadow-sm border ${
                   msg.role === 'user' 
-                    ? 'bg-gradient-to-br from-emerald-500 to-green-600 text-white rounded-br-none shadow-green-500/20' 
-                    : 'bg-white text-gray-800 border border-gray-100 rounded-bl-none'
+                    ? 'bg-emerald-500/80 text-white rounded-br-none shadow-[0_4px_12px_rgba(16,185,129,0.2)] border-emerald-400/30' 
+                    : 'bg-white/60 text-slate-800 rounded-bl-none shadow-[0_4px_12px_rgba(0,0,0,0.05)] border-white/60'
                 }`}>
                   {renderFormattedText(msg.text)}
                 </div>
               </div>
             ))}
             {isLoading && (
-               <div className="flex justify-start gap-2 items-end">
-                 <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center shrink-0 shadow-sm border border-white mb-1 overflow-hidden">
+               <div className="flex justify-start gap-3 items-end">
+                 <div className="w-8 h-8 rounded-full bg-white/50 backdrop-blur flex items-center justify-center shrink-0 shadow-sm border border-white/50 mb-1 overflow-hidden">
                       <img src={CONCIERGE_AVATAR} alt="AI" className="w-full h-full object-cover" />
                  </div>
-                 <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-none p-4 shadow-sm flex gap-1.5 items-center">
+                 <div className="bg-white/60 border border-white/60 backdrop-blur-md rounded-[20px] rounded-bl-none p-4 shadow-sm flex gap-1.5 items-center">
                    <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
-                   <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce delay-75"></div>
+                   <div className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce delay-75"></div>
                    <div className="w-2 h-2 bg-emerald-600 rounded-full animate-bounce delay-150"></div>
                  </div>
                </div>
@@ -255,23 +254,26 @@ export const ConciergeChat: React.FC = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          <div className="p-3 bg-white border-t border-gray-100 flex gap-2">
-            <input 
-              type="text" 
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-              placeholder="Ask anything..."
-              className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all placeholder-gray-400"
-            />
-            <Button 
-              size="sm" 
-              onClick={handleSend} 
-              disabled={isLoading || !input.trim()} 
-              className="rounded-xl px-3 !bg-gradient-to-r !from-emerald-500 !to-green-600 !hover:from-emerald-600 !hover:to-green-700 !border-0 !focus:ring-emerald-500 shadow-md shadow-green-500/20 text-white"
-            >
-              <Send size={18} />
-            </Button>
+          {/* Input Area - Floating Glass Pill */}
+          <div className="p-4 bg-white/30 border-t border-white/40 backdrop-blur-lg">
+             <div className="relative flex items-center gap-2">
+                <input 
+                  type="text" 
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                  placeholder="Ask anything..."
+                  className="flex-1 bg-white/50 border border-white/60 rounded-[20px] pl-5 pr-12 py-3 text-sm text-slate-800 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:bg-white/70 transition-all shadow-inner backdrop-blur-sm"
+                />
+                <Button 
+                  size="sm" 
+                  onClick={handleSend} 
+                  disabled={isLoading || !input.trim()} 
+                  className="absolute right-1.5 rounded-[16px] w-10 h-10 !p-0 flex items-center justify-center !bg-emerald-500/90 hover:!bg-emerald-600 !border-0 text-white shadow-md shadow-emerald-500/20"
+                >
+                  <Send size={18} className={input.trim() ? "ml-0.5" : ""} />
+                </Button>
+             </div>
           </div>
         </div>
       )}
