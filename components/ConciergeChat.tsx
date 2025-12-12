@@ -87,7 +87,8 @@ export const ConciergeChat: React.FC = () => {
     const parts = text.split(/(\*\*.+?\*\*)/g);
     return parts.map((part, index) => {
       if (part.startsWith('**') && part.endsWith('**')) {
-        return <strong key={`b-${keyPrefix}-${index}`} className="font-bold">{part.slice(2, -2)}</strong>;
+        // Pass to parseItalic to allow nested italics within bold
+        return <strong key={`b-${keyPrefix}-${index}`} className="font-bold">{parseItalic(part.slice(2, -2), keyPrefix, index)}</strong>;
       }
       // Chain to Italic
       return parseItalic(part, keyPrefix, index);
@@ -100,7 +101,8 @@ export const ConciergeChat: React.FC = () => {
     const parts = text.split(/(~~.+?~~)/g);
     return parts.map((part, index) => {
       if (part.startsWith('~~') && part.endsWith('~~')) {
-        return <s key={`s-${index}`} className="opacity-75">{part.slice(2, -2)}</s>;
+        // Pass to parseBold to allow nested bold/italics within strikethrough
+        return <s key={`s-${index}`} className="opacity-75">{parseBold(part.slice(2, -2), index)}</s>;
       }
       // Chain to Bold
       return parseBold(part, index);
