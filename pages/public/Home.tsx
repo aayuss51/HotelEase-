@@ -258,14 +258,17 @@ export const Home: React.FC = () => {
                  />
                </div>
              </div>
-             <button 
+             
+             {/* Updated Button to use the new Component */}
+             <Button 
                 onClick={handleSearch} 
                 disabled={isSearching}
-                className="w-full lg:w-auto h-[50px] px-8 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-emerald-600/40 transition-all transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                variant="primary"
+                className="w-full lg:w-auto h-[50px] shadow-lg"
              >
                {isSearching && <Loader2 className="animate-spin" size={20} />}
                {isSearching ? 'Checking...' : 'Check Availability'}
-             </button>
+             </Button>
 
              {dateError && (
                <div className="absolute -bottom-12 left-0 w-full flex items-center justify-center">
@@ -385,13 +388,13 @@ export const Home: React.FC = () => {
                         <Button 
                           onClick={() => handleViewDetails(room)} 
                           variant="secondary"
-                          className="w-full py-4 text-sm tracking-wide font-semibold bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 transition-colors rounded-xl flex items-center justify-center gap-2"
+                          className="w-full py-4 text-sm"
                         >
                           <Info size={16} /> About this Room
                         </Button>
                         <Button 
                           onClick={() => handleBook(room)} 
-                          className="w-full py-4 text-sm tracking-wide uppercase font-semibold bg-gray-900 hover:bg-emerald-700 transition-colors rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-gray-200"
+                          className="w-full py-4 text-sm font-bold uppercase tracking-wider"
                         >
                           Reserve Now
                         </Button>
