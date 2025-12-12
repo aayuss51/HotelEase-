@@ -105,7 +105,7 @@ export const ConciergeChat: React.FC = () => {
         const content = trimmed.substring(2);
         return (
           <div key={i} className="flex gap-2 items-start my-1 pl-2">
-            <span className="text-amber-500 font-bold mt-[-2px]">•</span>
+            <span className="text-emerald-500 font-bold mt-[-2px]">•</span>
             <span className="flex-1">{parseInlineFormatting(content)}</span>
           </div>
         );
@@ -122,7 +122,7 @@ export const ConciergeChat: React.FC = () => {
     return (
       <button 
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 shadow-2xl shadow-amber-500/30 flex items-center justify-center text-white z-50 hover:scale-105 transition-all duration-300 border border-amber-300 backdrop-blur-md group"
+        className="fixed bottom-6 right-6 w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400 via-green-500 to-emerald-600 shadow-2xl shadow-emerald-500/30 flex items-center justify-center text-white z-50 hover:scale-105 transition-all duration-300 border border-emerald-300 backdrop-blur-md group"
       >
         <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
         {/* Chat Support Icon */}
@@ -133,14 +133,14 @@ export const ConciergeChat: React.FC = () => {
 
   return (
     <div className="fixed bottom-6 right-6 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl z-50 flex flex-col border border-white/20 overflow-hidden backdrop-blur-3xl ring-1 ring-black/5 animate-fade-in-up">
-      <div className="bg-gradient-to-r from-amber-400 via-orange-500 to-amber-600 p-4 flex justify-between items-center text-white shadow-md">
+      <div className="bg-gradient-to-r from-emerald-400 via-green-500 to-emerald-600 p-4 flex justify-between items-center text-white shadow-md">
         <div className="flex items-center gap-3">
           <div className="p-1.5 bg-white/20 rounded-lg backdrop-blur-sm border border-white/10 flex items-center justify-center">
              <Crown size={18} className="text-white fill-white/20" />
           </div>
           <div className="flex flex-col">
               <h3 className="font-semibold tracking-wide text-sm leading-none">Mero Support</h3>
-              <span className="text-[10px] text-amber-100 opacity-90 mt-0.5">Official Chat Support</span>
+              <span className="text-[10px] text-emerald-100 opacity-90 mt-0.5">Official Chat Support</span>
           </div>
         </div>
         <div className="flex items-center gap-1">
@@ -166,14 +166,14 @@ export const ConciergeChat: React.FC = () => {
           <div key={idx} className={`flex w-full ${msg.role === 'user' ? 'justify-end' : 'justify-start gap-2 items-end'}`}>
             
             {msg.role === 'ai' && (
-               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center shrink-0 shadow-sm border border-white mb-1">
+               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-green-600 flex items-center justify-center shrink-0 shadow-sm border border-white mb-1">
                   <Crown size={14} className="text-white fill-white/20" />
                </div>
             )}
 
             <div className={`max-w-[80%] rounded-2xl p-3.5 text-sm shadow-sm leading-relaxed ${
               msg.role === 'user' 
-                ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-br-none shadow-orange-500/20' 
+                ? 'bg-gradient-to-br from-emerald-500 to-green-600 text-white rounded-br-none shadow-green-500/20' 
                 : 'bg-white text-gray-800 border border-gray-100 rounded-bl-none'
             }`}>
               {renderFormattedText(msg.text)}
@@ -182,13 +182,13 @@ export const ConciergeChat: React.FC = () => {
         ))}
         {isLoading && (
            <div className="flex justify-start gap-2 items-end">
-             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center shrink-0 shadow-sm border border-white mb-1">
+             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-green-600 flex items-center justify-center shrink-0 shadow-sm border border-white mb-1">
                   <Crown size={14} className="text-white fill-white/20" />
              </div>
              <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-none p-4 shadow-sm flex gap-1.5 items-center">
-               <div className="w-2 h-2 bg-amber-400 rounded-full animate-bounce"></div>
-               <div className="w-2 h-2 bg-orange-500 rounded-full animate-bounce delay-75"></div>
-               <div className="w-2 h-2 bg-amber-600 rounded-full animate-bounce delay-150"></div>
+               <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
+               <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce delay-75"></div>
+               <div className="w-2 h-2 bg-emerald-600 rounded-full animate-bounce delay-150"></div>
              </div>
            </div>
         )}
@@ -202,13 +202,13 @@ export const ConciergeChat: React.FC = () => {
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && handleSend()}
           placeholder="Ask anything..."
-          className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all placeholder-gray-400"
+          className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all placeholder-gray-400"
         />
         <Button 
           size="sm" 
           onClick={handleSend} 
           disabled={isLoading || !input.trim()} 
-          className="rounded-xl px-3 !bg-gradient-to-r !from-amber-500 !to-orange-600 !hover:from-amber-600 !hover:to-orange-700 !border-0 !focus:ring-amber-500 shadow-md shadow-orange-500/20 text-white"
+          className="rounded-xl px-3 !bg-gradient-to-r !from-emerald-500 !to-green-600 !hover:from-emerald-600 !hover:to-green-700 !border-0 !focus:ring-emerald-500 shadow-md shadow-green-500/20 text-white"
         >
           <Send size={18} />
         </Button>

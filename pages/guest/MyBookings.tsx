@@ -22,9 +22,9 @@ const getNextDay = (dateStr: string) => {
 const getStatusColor = (status: string) => {
   switch(status) {
     case 'CONFIRMED': 
-      return 'bg-green-100 text-green-800 border-green-200 ring-1 ring-green-600/20';
+      return 'bg-emerald-100 text-emerald-800 border-emerald-200 ring-1 ring-emerald-600/20';
     case 'PENDING': 
-      return 'bg-yellow-100 text-yellow-800 border-yellow-200 ring-1 ring-yellow-600/20';
+      return 'bg-amber-100 text-amber-800 border-amber-200 ring-1 ring-amber-600/20';
     case 'CANCELLED': 
     case 'REJECTED': 
       return 'bg-red-100 text-red-800 border-red-200 ring-1 ring-red-600/20';
@@ -114,7 +114,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
                  {booking.status.charAt(0) + booking.status.slice(1).toLowerCase()}
                </span>
                {booking.paymentStatus === 'PAID' && (
-                 <span className="text-[10px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded border border-green-100">PAID</span>
+                 <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">PAID</span>
                )}
             </div>
           </div>
@@ -143,12 +143,12 @@ const BookingCard: React.FC<BookingCardProps> = ({
           <div className={`p-3 rounded-xl border ${isHistory ? 'bg-transparent border-gray-200' : 'bg-gray-50/50 border-gray-100 relative group'}`}>
             <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest flex items-center gap-1">
               Check Out
-              {canEdit && <Pencil size={10} className="text-blue-500 opacity-50" />}
+              {canEdit && <Pencil size={10} className="text-emerald-500 opacity-50" />}
             </p>
             {canEdit ? (
               <input 
                 type="date"
-                className="mt-1 w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-1 shadow-sm transition-all cursor-pointer hover:border-blue-300"
+                className="mt-1 w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 block p-1 shadow-sm transition-all cursor-pointer hover:border-emerald-300"
                 value={booking.checkOut}
                 min={getNextDay(booking.checkIn)}
                 onChange={(e) => {
@@ -163,7 +163,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
 
           <div className={`p-3 rounded-xl border ${isHistory ? 'bg-transparent border-gray-200' : 'bg-gray-50/50 border-gray-100'}`}>
             <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest">Total Price</p>
-            <p className={`font-bold mt-1 ${isHistory ? 'text-gray-500' : 'text-blue-600'}`}>NPR {booking.totalPrice.toLocaleString()}</p>
+            <p className={`font-bold mt-1 ${isHistory ? 'text-gray-500' : 'text-emerald-600'}`}>NPR {booking.totalPrice.toLocaleString()}</p>
           </div>
           <div className={`p-3 rounded-xl border ${isHistory ? 'bg-transparent border-gray-200' : 'bg-gray-50/50 border-gray-100'}`}>
             <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest">Guest</p>
@@ -178,7 +178,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
                  variant="secondary"
                  size="sm"
                  onClick={() => onEdit(booking)}
-                 className="rounded-lg border border-gray-200 text-gray-600 hover:text-blue-600 hover:border-blue-200"
+                 className="rounded-lg border border-gray-200 text-gray-600 hover:text-emerald-600 hover:border-emerald-200"
                  title="Edit full booking details (Available up to 24h before check-in)"
                >
                  <Pencil size={14} className="mr-2" /> Full Edit
@@ -190,7 +190,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
                <Button
                  size="sm"
                  onClick={() => onCheckout(booking.id)}
-                 className="rounded-lg shadow-sm bg-blue-600 hover:bg-blue-700 text-white"
+                 className="rounded-lg shadow-sm bg-emerald-600 hover:bg-emerald-700 text-white"
                >
                  <LogOut size={16} className="mr-2" /> Check Out
                </Button>
@@ -418,7 +418,7 @@ export const MyBookings: React.FC = () => {
   if (isLoading) {
     return (
       <div className="flex flex-col justify-center items-center min-h-[60vh] gap-4">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
         <p className="text-gray-500 animate-pulse">Updating your reservations...</p>
       </div>
     );
@@ -440,20 +440,20 @@ export const MyBookings: React.FC = () => {
                 <RefreshCw size={16} /> Refresh
             </Button>
             <Link to="/">
-                <Button className="shadow-lg shadow-blue-600/20">Book Another Room</Button>
+                <Button className="shadow-lg shadow-emerald-600/20">Book Another Room</Button>
             </Link>
         </div>
       </div>
 
       {bookings.length === 0 ? (
         <div className="bg-white rounded-3xl p-16 text-center border border-gray-100 shadow-xl shadow-gray-200/50 max-w-2xl mx-auto mt-12">
-          <div className="w-20 h-20 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-20 h-20 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
             <Calendar size={40} />
           </div>
           <h3 className="text-2xl font-bold text-gray-900 mb-3">No bookings yet</h3>
           <p className="text-gray-500 mb-8 max-w-md mx-auto">You haven't made any reservations with us yet. Explore our luxury residences and book your stay today.</p>
           <Link to="/">
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-xl font-medium hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20">
+            <button className="bg-emerald-600 text-white px-8 py-3 rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-600/20">
               Browse Rooms
             </button>
           </Link>
@@ -464,12 +464,12 @@ export const MyBookings: React.FC = () => {
           {/* Section 1: Active Bookings */}
           <section>
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 bg-blue-100 text-blue-600 rounded-lg">
+              <div className="p-2 bg-emerald-100 text-emerald-600 rounded-lg">
                  <Calendar size={20} />
               </div>
               <h2 className="text-xl font-bold text-gray-800">Current & Upcoming</h2>
               {activeBookings.length > 0 && (
-                <span className="bg-blue-600 text-white text-xs font-bold px-2.5 py-1 rounded-full">
+                <span className="bg-emerald-600 text-white text-xs font-bold px-2.5 py-1 rounded-full">
                   {activeBookings.length}
                 </span>
               )}

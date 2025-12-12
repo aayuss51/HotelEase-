@@ -153,9 +153,9 @@ export const Home: React.FC = () => {
            }}
         >
           <div className="animate-fade-in-up">
-            <h5 className="text-blue-200 font-semibold tracking-[0.3em] uppercase mb-6 text-sm md:text-base border-b border-blue-200/30 inline-block pb-2">Welcome to Mero-Booking</h5>
+            <h5 className="text-emerald-200 font-semibold tracking-[0.3em] uppercase mb-6 text-sm md:text-base border-b border-emerald-200/30 inline-block pb-2">Welcome to Mero-Booking</h5>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 tracking-tight font-serif leading-tight drop-shadow-2xl text-white">
-              Redefining <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-100 via-white to-blue-100">Luxury Living</span>
+              Redefining <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-100 via-white to-emerald-100">Luxury Living</span>
             </h1>
             <p className="text-xl text-gray-200 mb-12 max-w-2xl mx-auto font-light leading-relaxed drop-shadow-lg">
               Escape to a world of unparalleled comfort and elegance. Your sanctuary of sophistication awaits.
@@ -167,11 +167,11 @@ export const Home: React.FC = () => {
              <div className="flex-1 w-full">
                <label className="block text-xs font-bold text-white uppercase tracking-wider mb-2 drop-shadow-md">Check In</label>
                <div className="relative group">
-                 <Calendar className="absolute left-4 top-3.5 text-gray-500 group-focus-within:text-blue-600 transition-colors z-10" size={20} />
+                 <Calendar className="absolute left-4 top-3.5 text-gray-500 group-focus-within:text-emerald-600 transition-colors z-10" size={20} />
                  <input 
                    type="date" 
                    style={{ colorScheme: 'light' }}
-                   className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all shadow-lg"
+                   className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none transition-all shadow-lg"
                    value={dates.checkIn}
                    min={new Date().toISOString().split('T')[0]}
                    onChange={e => {
@@ -184,11 +184,11 @@ export const Home: React.FC = () => {
              <div className="flex-1 w-full">
                <label className="block text-xs font-bold text-white uppercase tracking-wider mb-2 drop-shadow-md">Check Out</label>
                <div className="relative group">
-                 <Calendar className="absolute left-4 top-3.5 text-gray-500 group-focus-within:text-blue-600 transition-colors z-10" size={20} />
+                 <Calendar className="absolute left-4 top-3.5 text-gray-500 group-focus-within:text-emerald-600 transition-colors z-10" size={20} />
                  <input 
                    type="date" 
                    style={{ colorScheme: 'light' }}
-                   className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all shadow-lg"
+                   className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:outline-none transition-all shadow-lg"
                    value={dates.checkOut}
                    min={getNextDay(dates.checkIn)}
                    onChange={e => {
@@ -201,7 +201,7 @@ export const Home: React.FC = () => {
              <button 
                 onClick={handleSearch} 
                 disabled={isSearching}
-                className="w-full lg:w-auto h-[50px] px-8 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-blue-600/40 transition-all transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full lg:w-auto h-[50px] px-8 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-emerald-600/40 transition-all transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
              >
                {isSearching && <Loader2 className="animate-spin" size={20} />}
                {isSearching ? 'Checking...' : 'Check Availability'}
@@ -247,9 +247,9 @@ export const Home: React.FC = () => {
                
                return (
                  <div key={f.id} className="flex flex-col items-center gap-4 group cursor-pointer">
-                   <div className="relative w-20 h-20 rounded-[24px] flex items-center justify-center transition-all duration-300 transform group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-15px_rgba(37,99,235,0.3)] bg-gradient-to-br from-white to-gray-50 shadow-xl shadow-gray-200/50 border border-white">
-                      <div className="absolute inset-0 rounded-[24px] bg-gradient-to-br from-blue-50/0 to-blue-50/80 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                      <Icon size={32} className="relative z-10 text-gray-400 group-hover:text-blue-600 transition-colors duration-300" strokeWidth={1.5} />
+                   <div className="relative w-20 h-20 rounded-[24px] flex items-center justify-center transition-all duration-300 transform group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-15px_rgba(16,185,129,0.3)] bg-gradient-to-br from-white to-gray-50 shadow-xl shadow-gray-200/50 border border-white">
+                      <div className="absolute inset-0 rounded-[24px] bg-gradient-to-br from-emerald-50/0 to-emerald-50/80 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <Icon size={32} className="relative z-10 text-gray-400 group-hover:text-emerald-600 transition-colors duration-300" strokeWidth={1.5} />
                    </div>
                    <span className="text-sm font-semibold tracking-wide text-gray-500 group-hover:text-gray-900 transition-colors">{f.name}</span>
                  </div>
@@ -264,7 +264,7 @@ export const Home: React.FC = () => {
              <h2 className="text-4xl font-serif font-bold text-gray-900 mb-4">
               {availableRoomIds ? 'Available Residences' : 'Accommodations'}
              </h2>
-             <div className="w-24 h-1 bg-blue-600 mx-auto rounded-full opacity-80"></div>
+             <div className="w-24 h-1 bg-emerald-600 mx-auto rounded-full opacity-80"></div>
           </div>
           
           {displayedRooms.length === 0 ? (
@@ -285,16 +285,16 @@ export const Home: React.FC = () => {
                         className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60"></div>
-                      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md border border-white/50 px-5 py-2.5 rounded-2xl text-blue-900 font-bold shadow-lg text-sm">
+                      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md border border-white/50 px-5 py-2.5 rounded-2xl text-emerald-900 font-bold shadow-lg text-sm">
                         NPR {room.pricePerNight.toLocaleString()} <span className="text-gray-500 font-normal">/ night</span>
                       </div>
                     </div>
                     <div className="p-8 flex-1 flex flex-col">
                       <div className="flex justify-between items-start mb-4">
                          <div>
-                           <h3 className="text-2xl font-bold font-serif text-gray-900 mb-1 group-hover:text-blue-700 transition-colors">{room.name}</h3>
+                           <h3 className="text-2xl font-bold font-serif text-gray-900 mb-1 group-hover:text-emerald-700 transition-colors">{room.name}</h3>
                            <div className="flex items-center gap-4 text-gray-500 text-sm mt-2">
-                             <span className="flex items-center gap-1.5"><Users size={16} className="text-blue-500"/> {room.capacity} Guests</span>
+                             <span className="flex items-center gap-1.5"><Users size={16} className="text-emerald-500"/> {room.capacity} Guests</span>
                              <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
                              <div className="flex items-center gap-1.5" title={`${count} reviews`}>
                                <Star size={16} className={`fill-current ${count > 0 ? 'text-yellow-400' : 'text-gray-300'}`}/> 
@@ -331,7 +331,7 @@ export const Home: React.FC = () => {
                         </Button>
                         <Button 
                           onClick={() => handleBook(room)} 
-                          className="w-full py-4 text-sm tracking-wide uppercase font-semibold bg-gray-900 hover:bg-blue-700 transition-colors rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-gray-200"
+                          className="w-full py-4 text-sm tracking-wide uppercase font-semibold bg-gray-900 hover:bg-emerald-700 transition-colors rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-gray-200"
                         >
                           Reserve Now
                         </Button>

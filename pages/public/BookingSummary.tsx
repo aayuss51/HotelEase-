@@ -77,7 +77,7 @@ export const BookingSummary: React.FC = () => {
   };
 
   if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin text-blue-600" size={32} /></div>;
+    return <div className="min-h-screen flex items-center justify-center"><Loader2 className="animate-spin text-emerald-600" size={32} /></div>;
   }
 
   // --- Success View (Confirmation Modal/Page) ---
@@ -96,10 +96,10 @@ export const BookingSummary: React.FC = () => {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 animate-fade-in print:bg-white print:p-0">
         <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-lg w-full text-center border border-gray-100 relative overflow-hidden print:shadow-none print:border-none print:w-full print:max-w-none">
            {/* Decorative Status Bar */}
-           <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r print:hidden ${isPending ? 'from-amber-400 to-amber-600' : 'from-green-400 to-green-600'}`}></div>
+           <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r print:hidden ${isPending ? 'from-amber-400 to-amber-600' : 'from-emerald-400 to-emerald-600'}`}></div>
 
-           <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm border print:hidden ${isPending ? 'bg-amber-50 border-amber-100' : 'bg-green-50 border-green-100'}`}>
-             {isPending ? <Clock className="text-amber-500" size={40} /> : <CheckCircle className="text-green-500" size={40} />}
+           <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm border print:hidden ${isPending ? 'bg-amber-50 border-amber-100' : 'bg-emerald-50 border-emerald-100'}`}>
+             {isPending ? <Clock className="text-amber-500" size={40} /> : <CheckCircle className="text-emerald-500" size={40} />}
            </div>
            
            <h1 className="text-3xl font-bold text-gray-900 mb-2">
@@ -112,20 +112,20 @@ export const BookingSummary: React.FC = () => {
            </p>
 
            {/* Unique Confirmation Number Section */}
-           <div className="bg-blue-50 border border-blue-100 rounded-xl p-6 mb-8 text-center shadow-sm relative overflow-hidden group">
-             <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
-             <p className="text-xs text-blue-600 font-bold uppercase tracking-wider mb-2">Booking Confirmation ID</p>
+           <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-6 mb-8 text-center shadow-sm relative overflow-hidden group">
+             <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
+             <p className="text-xs text-emerald-600 font-bold uppercase tracking-wider mb-2">Booking Confirmation ID</p>
              <div className="flex items-center justify-center gap-3 relative z-10">
-               <p className="text-4xl font-mono font-bold text-blue-900 tracking-widest select-all">#{confirmedBooking.id}</p>
+               <p className="text-4xl font-mono font-bold text-emerald-900 tracking-widest select-all">#{confirmedBooking.id}</p>
                <button 
                  onClick={handleCopyId} 
-                 className="p-2 bg-white/50 hover:bg-white text-blue-500 hover:text-green-600 rounded-lg transition-all shadow-sm border border-transparent hover:border-blue-100"
+                 className="p-2 bg-white/50 hover:bg-white text-emerald-500 hover:text-green-600 rounded-lg transition-all shadow-sm border border-transparent hover:border-emerald-100"
                  title="Copy Confirmation Number"
                >
                  {isCopied ? <Check size={20} className="text-green-500" /> : <Copy size={20} />}
                </button>
              </div>
-             <div className="absolute -right-4 -bottom-4 text-blue-100 opacity-20 pointer-events-none">
+             <div className="absolute -right-4 -bottom-4 text-emerald-100 opacity-20 pointer-events-none">
                <FileText size={80} />
              </div>
            </div>
@@ -135,12 +135,12 @@ export const BookingSummary: React.FC = () => {
              <div className="flex justify-between items-center border-b border-slate-200 pb-4 mb-4">
                <div>
                   <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border print:bg-transparent print:text-black print:border-black mr-2 ${
-                    isPending ? 'bg-amber-100 text-amber-800 border-amber-200' : 'bg-green-100 text-green-800 border-green-200'
+                    isPending ? 'bg-amber-100 text-amber-800 border-amber-200' : 'bg-emerald-100 text-emerald-800 border-emerald-200'
                   }`}>
                     {confirmedBooking.status}
                   </span>
                   <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border print:bg-transparent print:text-black print:border-black ${
-                    isPaid ? 'bg-green-100 text-green-800 border-green-200' : 'bg-gray-100 text-gray-800 border-gray-200'
+                    isPaid ? 'bg-emerald-100 text-emerald-800 border-emerald-200' : 'bg-gray-100 text-gray-800 border-gray-200'
                   }`}>
                     {isPaid ? 'PAID' : 'PAY ON ARRIVAL'}
                   </span>
@@ -191,7 +191,7 @@ export const BookingSummary: React.FC = () => {
                 </div>
                 <div className="flex justify-between items-center pt-2 border-t border-slate-200">
                     <span className="font-bold text-gray-900">Total Amount</span>
-                    <span className="font-bold text-xl text-blue-600 print:text-black">NPR {confirmedBooking.totalPrice.toLocaleString()}</span>
+                    <span className="font-bold text-xl text-emerald-600 print:text-black">NPR {confirmedBooking.totalPrice.toLocaleString()}</span>
                 </div>
              </div>
            </div>
@@ -203,7 +203,7 @@ export const BookingSummary: React.FC = () => {
              <Button onClick={() => window.print()} variant="outline" className="flex-1 py-3 rounded-xl gap-2 border-gray-300 hover:bg-gray-50">
                <Printer size={18} /> Print
              </Button>
-             <Button onClick={() => navigate('/my-bookings')} className="flex-1 py-3 rounded-xl gap-2 shadow-lg shadow-blue-600/20">
+             <Button onClick={() => navigate('/my-bookings')} className="flex-1 py-3 rounded-xl gap-2 shadow-lg shadow-emerald-600/20">
                <FileText size={18} /> My Bookings
              </Button>
            </div>
@@ -307,7 +307,7 @@ export const BookingSummary: React.FC = () => {
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in">
               <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-gray-100 flex flex-col gap-4">
                   <div className="flex items-center gap-3">
-                      <div className="p-2 bg-blue-50 text-blue-600 rounded-full border border-blue-100">
+                      <div className="p-2 bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100">
                           <AlertCircle size={24} />
                       </div>
                       <h3 className="text-xl font-bold text-gray-900">Confirm Booking</h3>
@@ -335,11 +335,11 @@ export const BookingSummary: React.FC = () => {
                       </div>
                       <div className="flex justify-between pt-3 border-t border-gray-200 mt-1">
                           <span className="font-bold text-gray-700">Total</span>
-                          <span className="font-bold text-blue-600">NPR {totalCost.toLocaleString()}</span>
+                          <span className="font-bold text-emerald-600">NPR {totalCost.toLocaleString()}</span>
                       </div>
                   </div>
                   
-                  <p className="text-xs text-gray-500 bg-blue-50/50 p-3 rounded-lg border border-blue-50">
+                  <p className="text-xs text-gray-500 bg-emerald-50/50 p-3 rounded-lg border border-emerald-50">
                       {paymentMethod === 'CASH' 
                           ? 'By confirming, you agree to pay the total amount upon arrival at the hotel.' 
                           : `You will be redirected to the ${paymentMethod === 'ESEWA' ? 'eSewa' : 'Khalti'} secure gateway to complete the transaction.`}
@@ -347,7 +347,7 @@ export const BookingSummary: React.FC = () => {
                   
                   <div className="flex gap-3 mt-2">
                       <Button variant="secondary" onClick={() => setShowConfirmModal(false)} className="flex-1">Cancel</Button>
-                      <Button onClick={() => { setShowConfirmModal(false); processBooking(); }} className="flex-1 bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-600/20">
+                      <Button onClick={() => { setShowConfirmModal(false); processBooking(); }} className="flex-1 bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-600/20">
                           Confirm & {paymentMethod === 'CASH' ? 'Book' : 'Pay'}
                       </Button>
                   </div>
@@ -430,7 +430,7 @@ export const BookingSummary: React.FC = () => {
             <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200 shadow-sm">
                <div className="flex justify-between items-center mb-5 pb-5 border-b border-gray-200">
                  <div className="flex items-center gap-3">
-                   <div className="p-2 bg-blue-100 rounded-lg text-blue-600">
+                   <div className="p-2 bg-emerald-100 rounded-lg text-emerald-600">
                      <Calendar size={20} />
                    </div>
                    <div>
@@ -438,12 +438,12 @@ export const BookingSummary: React.FC = () => {
                      <p className="font-medium text-gray-900">{checkIn} — {checkOut}</p>
                    </div>
                  </div>
-                 <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm">{nights} Nights</span>
+                 <span className="bg-emerald-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm">{nights} Nights</span>
                </div>
                
                <div className="flex justify-between items-center">
                  <div className="flex items-center gap-3">
-                   <div className="p-2 bg-blue-100 rounded-lg text-blue-600">
+                   <div className="p-2 bg-emerald-100 rounded-lg text-emerald-600">
                      <Users size={20} />
                    </div>
                    <div>
@@ -469,7 +469,7 @@ export const BookingSummary: React.FC = () => {
                </div>
                <div className="flex justify-between items-center pt-4 border-t border-gray-100 mt-2">
                  <span className="font-bold text-gray-900 text-lg">Total Amount</span>
-                 <span className="font-bold text-3xl text-blue-600">NPR {totalCost.toLocaleString()}</span>
+                 <span className="font-bold text-3xl text-emerald-600">NPR {totalCost.toLocaleString()}</span>
                </div>
             </div>
           </div>
@@ -481,7 +481,7 @@ export const BookingSummary: React.FC = () => {
               className={`w-full py-4 rounded-xl text-lg shadow-xl transition-all transform active:scale-[0.99] ${
                   paymentMethod === 'ESEWA' ? 'bg-[#60bb46] hover:bg-[#4ea835] shadow-[#60bb46]/20' :
                   paymentMethod === 'KHALTI' ? 'bg-[#5c2d91] hover:bg-[#482075] shadow-[#5c2d91]/20' :
-                  'shadow-blue-600/20'
+                  'shadow-emerald-600/20'
               }`}
             >
               {isSubmitting ? (

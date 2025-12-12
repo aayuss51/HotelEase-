@@ -61,13 +61,13 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex">
-      {/* Sidebar */}
-      <aside className="w-64 bg-slate-900 text-white flex flex-col fixed h-full z-10">
-        <div className="p-6 border-b border-slate-700">
+      {/* Sidebar - Updated to Dark Emerald Green */}
+      <aside className="w-64 bg-emerald-950 text-white flex flex-col fixed h-full z-10">
+        <div className="p-6 border-b border-emerald-900">
           <div className="flex flex-col">
             <h1 className="text-xl font-bold tracking-wider">Mero-Booking Admin</h1>
             {user.role && (
-              <span className="text-xs text-slate-400 uppercase mt-1 tracking-wide font-medium">
+              <span className="text-xs text-emerald-400 uppercase mt-1 tracking-wide font-medium">
                 {user.role.replace('_', ' ')}
               </span>
             )}
@@ -80,7 +80,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
               key={item.to}
               to={item.to}
               end={item.exact}
-              className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`}
+              className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-emerald-800 text-white shadow-lg' : 'text-emerald-200 hover:bg-emerald-900 hover:text-white'}`}
             >
               <item.icon size={20} />
               <span>{item.label}</span>
@@ -88,10 +88,10 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           ))}
         </nav>
 
-        <div className="p-4 border-t border-slate-700">
+        <div className="p-4 border-t border-emerald-900">
           <button 
             onClick={handleLogout}
-            className="flex items-center gap-3 px-4 py-3 w-full text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg transition-colors"
+            className="flex items-center gap-3 px-4 py-3 w-full text-emerald-300 hover:bg-emerald-900 hover:text-white rounded-lg transition-colors"
           >
             <LogOut size={20} />
             <span>Logout</span>

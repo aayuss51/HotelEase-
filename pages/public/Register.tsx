@@ -47,18 +47,18 @@ export const Register: React.FC = () => {
       <div className="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full animate-fade-in border border-gray-100">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Create Account</h1>
-          <p className="text-gray-500 mt-2 text-sm">Join HotelEase for exclusive benefits and easy booking management.</p>
+          <p className="text-gray-500 mt-2 text-sm">Join Mero-Booking for exclusive benefits and easy booking management.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Full Name</label>
             <div className="relative group">
-              <UserIcon className="absolute left-3 top-3.5 text-gray-400 group-focus-within:text-blue-500 transition-colors" size={18} />
+              <UserIcon className="absolute left-3 top-3.5 text-gray-400 group-focus-within:text-emerald-500 transition-colors" size={18} />
               <input
                 type="text"
                 required
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-all placeholder-gray-400"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:outline-none transition-all placeholder-gray-400"
                 placeholder="John Doe"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -69,11 +69,11 @@ export const Register: React.FC = () => {
           <div>
             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Email Address</label>
             <div className="relative group">
-              <Mail className="absolute left-3 top-3.5 text-gray-400 group-focus-within:text-blue-500 transition-colors" size={18} />
+              <Mail className="absolute left-3 top-3.5 text-gray-400 group-focus-within:text-emerald-500 transition-colors" size={18} />
               <input
                 type="email"
                 required
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-all placeholder-gray-400"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:outline-none transition-all placeholder-gray-400"
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -84,11 +84,11 @@ export const Register: React.FC = () => {
           <div>
             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Password</label>
             <div className="relative group">
-              <Lock className="absolute left-3 top-3.5 text-gray-400 group-focus-within:text-blue-500 transition-colors" size={18} />
+              <Lock className="absolute left-3 top-3.5 text-gray-400 group-focus-within:text-emerald-500 transition-colors" size={18} />
               <input
                 type="password"
                 required
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-all placeholder-gray-400"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:outline-none transition-all placeholder-gray-400"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -99,11 +99,11 @@ export const Register: React.FC = () => {
           <div>
             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Confirm Password</label>
             <div className="relative group">
-              <Lock className="absolute left-3 top-3.5 text-gray-400 group-focus-within:text-blue-500 transition-colors" size={18} />
+              <Lock className="absolute left-3 top-3.5 text-gray-400 group-focus-within:text-emerald-500 transition-colors" size={18} />
               <input
                 type="password"
                 required
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-all placeholder-gray-400"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:outline-none transition-all placeholder-gray-400"
                 placeholder="••••••••"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -120,7 +120,7 @@ export const Register: React.FC = () => {
 
           <Button 
             type="submit" 
-            className="w-full py-3.5 rounded-xl shadow-lg shadow-blue-600/20 text-base" 
+            className="w-full py-3.5 rounded-xl shadow-lg shadow-emerald-600/20 text-base" 
             size="lg"
             disabled={isLoading}
           >
@@ -138,7 +138,7 @@ export const Register: React.FC = () => {
           <div className="text-center mt-6 border-t border-gray-100 pt-6">
             <p className="text-sm text-gray-600">
               Already have an account?{' '}
-              <Link to="/login" className="text-blue-600 font-bold hover:text-blue-700 transition-colors">
+              <Link to="/login" className="text-emerald-600 font-bold hover:text-emerald-700 transition-colors">
                 Sign in here
               </Link>
             </p>

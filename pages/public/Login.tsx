@@ -65,7 +65,7 @@ export const Login: React.FC = () => {
               <input
                 type="email"
                 required
-                className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
+                className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-all"
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -80,7 +80,7 @@ export const Login: React.FC = () => {
               <input
                 type="password"
                 required
-                className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
+                className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-all"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -96,7 +96,7 @@ export const Login: React.FC = () => {
                  onClick={() => { setRole('GUEST'); setError(''); }}
                  className={`py-3 rounded-lg border font-medium transition-all text-sm ${
                    role === 'GUEST' 
-                   ? 'bg-blue-600 text-white border-blue-600' 
+                   ? 'bg-emerald-600 text-white border-emerald-600' 
                    : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
                  }`}
                >
@@ -140,7 +140,7 @@ export const Login: React.FC = () => {
           <div className="text-center mt-4">
              <p className="text-sm text-gray-600 mb-2">
                Don't have an account?{' '}
-               <Link to="/register" className="text-blue-600 font-medium hover:underline">
+               <Link to="/register" className="text-emerald-600 font-medium hover:underline">
                  Sign up
                </Link>
              </p>

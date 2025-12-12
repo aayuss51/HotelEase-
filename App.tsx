@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { HashRouter as Router, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -43,10 +42,10 @@ const LayoutWithChat: React.FC<{ children: React.ReactNode }> = ({ children }) =
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm backdrop-blur-md bg-white/90">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 group">
-          {/* Luxurious MB Logo */}
-          <div className="relative w-10 h-10 bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-amber-500/30 transform group-hover:scale-105 transition-transform duration-300 border border-amber-300">
+          {/* Luxurious MB Logo - Updated to Green Theme */}
+          <div className="relative w-10 h-10 bg-gradient-to-br from-emerald-400 via-green-500 to-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-500/30 transform group-hover:scale-105 transition-transform duration-300 border border-emerald-300">
              <div className="absolute -top-1 -right-1">
-                <Crown size={14} className="text-yellow-200 drop-shadow-sm fill-yellow-400" />
+                <Crown size={14} className="text-emerald-100 drop-shadow-sm fill-emerald-200" />
              </div>
              <span className="font-serif font-black text-lg tracking-tighter leading-none mt-0.5 drop-shadow-md">MB</span>
           </div>
@@ -61,7 +60,7 @@ const LayoutWithChat: React.FC<{ children: React.ReactNode }> = ({ children }) =
     <footer className="bg-white border-t border-gray-100 py-6 mt-auto">
         <div className="max-w-7xl mx-auto px-6 text-center">
             <p className="text-gray-500 text-sm font-medium">
-                copyright &copy;2025 <span className="text-blue-600 font-bold">Nova IT Solutions</span>
+                copyright &copy;2025 <span className="text-emerald-600 font-bold">Nova IT Solutions</span>
             </p>
         </div>
     </footer>
@@ -76,10 +75,10 @@ const PublicNav = () => {
             <>
              <span className="text-sm text-gray-600 hidden md:block font-medium">Namaste, {user.name}</span>
              {(user.role === 'ADMIN' || user.role === 'SUPER_ADMIN') && (
-               <Link to="/admin" className="text-sm font-medium text-amber-600 hover:text-amber-700 hover:underline">Admin Panel</Link>
+               <Link to="/admin" className="text-sm font-medium text-emerald-600 hover:text-emerald-700 hover:underline">Admin Panel</Link>
              )}
              {/* Show My Bookings for everyone so Admins can test the flow too */}
-             <Link to="/my-bookings" className="text-sm font-medium text-slate-600 hover:text-amber-600 transition-colors">My Bookings</Link>
+             <Link to="/my-bookings" className="text-sm font-medium text-slate-600 hover:text-emerald-600 transition-colors">My Bookings</Link>
              <button onClick={logout} className="text-sm font-medium text-gray-500 hover:text-gray-900">Logout</button>
             </>
         )
@@ -88,7 +87,7 @@ const PublicNav = () => {
       <div className="flex gap-3">
         <Link 
           to="/login" 
-          className="text-sm font-medium text-gray-600 hover:text-amber-600 px-3 py-2 transition-colors"
+          className="text-sm font-medium text-gray-600 hover:text-emerald-600 px-3 py-2 transition-colors"
         >
           Login
         </Link>
