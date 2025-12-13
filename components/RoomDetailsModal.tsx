@@ -1,6 +1,6 @@
 import React from 'react';
 import { RoomType, Facility } from '../types';
-import { X, Users, Check, Star, Info } from 'lucide-react';
+import { X, Users, Check, Star, Info, ArrowRight } from 'lucide-react';
 import { Button } from './Button';
 import { ImageWithSkeleton } from './ImageWithSkeleton';
 
@@ -84,8 +84,8 @@ export const RoomDetailsModal: React.FC<RoomDetailsModalProps> = ({ isOpen, onCl
           <Button variant="secondary" onClick={onClose} className="flex-1 bg-white border-gray-200 hover:bg-gray-100">
             Close Details
           </Button>
-          <Button onClick={() => onBook(room)} className="flex-1 shadow-lg shadow-emerald-600/20 text-base">
-            Book this Room
+          <Button onClick={() => onBook(room)} className="flex-1 shadow-lg shadow-emerald-600/20 text-base flex items-center justify-center gap-2">
+            Book this Room <ArrowRight size={18} />
           </Button>
         </div>
       </div>
